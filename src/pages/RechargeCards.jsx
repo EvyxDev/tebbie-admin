@@ -3,7 +3,7 @@ import { getRechargeCards } from "../utlis/https";
 import ErrorMessage from "./ErrorMessage";
 import Loader from "./Loader";
 import { IoCardOutline } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { IoMdAddCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { FaFileExcel } from "react-icons/fa";
@@ -74,42 +74,48 @@ const RechargeCards = () => {
   });
 
   // Client-side date filtering function
-  const filterByDateRange = (cards) => {
-    if (!dateFrom && !dateTo) return cards;
+  const filterByDateRange = useCallback(
+    (cards) => {
+      if (!dateFrom && !dateTo) return cards;
 
-    return cards.filter((card) => {
-      if (!card.created_at) return false;
+      return cards.filter((card) => {
+        if (!card.created_at) return false;
 
-      const cardDate = new Date(card.created_at);
-      cardDate.setHours(0, 0, 0, 0); // Reset time to start of day
+        const cardDate = new Date(card.created_at);
+        cardDate.setHours(0, 0, 0, 0);
 
-      if (dateFrom && dateTo) {
-        // Filter between dateFrom and dateTo
-        const fromDate = new Date(dateFrom);
-        fromDate.setHours(0, 0, 0, 0);
-        const toDate = new Date(dateTo);
-        toDate.setHours(23, 59, 59, 999); // End of day
+        if (dateFrom && dateTo) {
+          const fromDate = new Date(dateFrom);
+          fromDate.setHours(0, 0, 0, 0);
+          fromDate.setDate(fromDate.getDate() - 1);
 
-        return cardDate >= fromDate && cardDate <= toDate;
-      } else if (dateFrom) {
-        // Filter from dateFrom to now
-        const fromDate = new Date(dateFrom);
-        fromDate.setHours(0, 0, 0, 0);
-        const now = new Date();
-        now.setHours(23, 59, 59, 999);
+          const toDate = new Date(dateTo);
+          toDate.setHours(23, 59, 59, 999);
+          toDate.setDate(toDate.getDate() + 1);
 
-        return cardDate >= fromDate && cardDate <= now;
-      } else if (dateTo) {
-        // Filter from beginning to dateTo
-        const toDate = new Date(dateTo);
-        toDate.setHours(23, 59, 59, 999);
+          return cardDate >= fromDate && cardDate <= toDate;
+        } else if (dateFrom) {
+          const fromDate = new Date(dateFrom);
+          fromDate.setHours(0, 0, 0, 0);
+          fromDate.setDate(fromDate.getDate() - 1);
 
-        return cardDate <= toDate;
-      }
+          const now = new Date();
+          now.setHours(23, 59, 59, 999);
 
-      return true;
-    });
-  };
+          return cardDate >= fromDate && cardDate <= now;
+        } else if (dateTo) {
+          const toDate = new Date(dateTo);
+          toDate.setHours(23, 59, 59, 999);
+          toDate.setDate(toDate.getDate() + 1);
+
+          return cardDate <= toDate;
+        }
+
+        return true;
+      });
+    },
+    [dateFrom, dateTo]
+  );
 
   const handleExport = () => {
     if (!hasPermission("exportRechargeCard")) {
