@@ -69,6 +69,7 @@ const AddHospital = () => {
     end_visit_at: "",
     visit_time: "",
     Password: "",
+    phone: "",
   });
   const { data: cities, isLoading: citiesIsLoading } = useQuery({
     queryKey: ["cities", hospitalData.state_id],
@@ -291,6 +292,26 @@ const AddHospital = () => {
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
+              </div>
+
+              {/* phone failed */}
+
+              <div className="mb-4 relative w-full flex flex-col justify-end items-start  col-span-1">
+                <label
+                  htmlFor="phone"
+                  className="block text-md almarai-semibold mb-4"
+                >
+                  <span className="text-red-500">*</span> {t("phone")}
+                </label>
+                <input
+                  placeholder={t("phone")}
+                  id="phone"
+                  name="phone"
+                  required
+                  onChange={handleChange}
+                  type="number"
+                  className="border border-gray-300 rounded-lg py-2 px-4 bg-[#F7F8FA] h-[50px] focus:outline-none focus:border-primary w-full "
+                />
               </div>
             </div>
             <div className="lg:flex mb-6 w-full">
