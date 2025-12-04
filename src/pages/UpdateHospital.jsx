@@ -80,6 +80,7 @@ const UpdateHospital = () => {
     end_visit_at: "",
     visit_time: "",
     Password: "",
+    phone: "",
   });
   const { data: cities, isLoading: citiesIsLoading } = useQuery({
     queryKey: ["cities", hospitalData.state_id],
@@ -92,6 +93,8 @@ const UpdateHospital = () => {
       const specializationIds = hospital.specializations.data.map(
         (spec) => spec.id
       );
+
+      console.log(hospital);
 
       setHospitalData({
         name: hospital.name || "",
@@ -111,6 +114,7 @@ const UpdateHospital = () => {
         end_visit_at: hospital.end_visit_at || "00:00",
         start_visit_from: hospital.start_visit_from || "00:00",
         visit_time: hospital.visit_time || "",
+        phone: hospital.phone || "",
       });
     }
   }, [hospital]);
@@ -374,6 +378,27 @@ const UpdateHospital = () => {
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
+              </div>
+
+              {/* phone failed */}
+
+              <div className="mb-4 relative w-full flex flex-col justify-end items-start  col-span-1">
+                <label
+                  htmlFor="phone"
+                  className="block text-md almarai-semibold mb-4"
+                >
+                  <span className="text-red-500">*</span> {t("phone")}
+                </label>
+                <input
+                  placeholder={t("phone")}
+                  id="phone"
+                  name="phone"
+                  required
+                  onChange={handleChange}
+                  value={hospitalData.phone}
+                  type="number"
+                  className="border border-gray-300 rounded-lg py-2 px-4 bg-[#F7F8FA] h-[50px] focus:outline-none focus:border-primary w-full "
+                />
               </div>
             </div>
             <div className="lg:flex mb-6 w-full">

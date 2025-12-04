@@ -24,6 +24,7 @@ import {
   FaUserMd,
   FaEnvelope,
   FaCheckCircle,
+  FaPhone,
 } from "react-icons/fa";
 
 const token = localStorage.getItem("authToken");
@@ -45,6 +46,8 @@ const HospitalDetails = () => {
     queryKey: ["Hospital-details", HospitalId],
     queryFn: () => getSpecificHospital({ id: HospitalId, token }),
   });
+
+  console.log(hospital);
 
   const { mutate: handleDelete, isLoading: isDeleting } = useMutation({
     mutationFn: () => deleteHospital({ id: HospitalId, token }),
@@ -142,6 +145,11 @@ const HospitalDetails = () => {
                 label="email"
                 displayLabel={t("email")}
                 value={hospital.email}
+              />
+              <InfoItem
+                label="phone"
+                displayLabel={t("phone")}
+                value={hospital.phone}
               />
               <InfoItem
                 label="status"
@@ -366,6 +374,8 @@ const InfoItem = ({ label, displayLabel, value }) => {
         return <FaUserMd className="text-[#33A9C7] me-2 shrink-0" />;
       case "email":
         return <FaEnvelope className="text-[#33A9C7] me-2 shrink-0" />;
+      case "phone":
+        return <FaPhone className="text-[#33A9C7] me-2 shrink-0" />;
       case "status":
         return <FaCheckCircle className="text-[#33A9C7] me-2 shrink-0" />;
       default:

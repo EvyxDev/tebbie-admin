@@ -379,6 +379,7 @@ export const newHospital = async ({
   specialization_id = [],
   start_visit_from,
   end_visit_at,
+  phone,
 }) => {
   const formdata = new FormData();
 
@@ -400,6 +401,7 @@ export const newHospital = async ({
   formdata.append("active", active ? "1" : "0");
   formdata.append("lat", lat);
   formdata.append("long", long);
+  formdata.append("phone", phone);
   if (city_id) {
     formdata.append("city_id", city_id);
   }
@@ -500,6 +502,7 @@ export const updateHospital = async ({
   doctor_ids = [],
   specialization_id = [],
   password,
+  phone,
 }) => {
   const formdata = new FormData();
   formdata.append("address", address);
@@ -516,6 +519,7 @@ export const updateHospital = async ({
   formdata.append("visit_time", visit_time);
   formdata.append("open_visits", open_visits);
   formdata.append("active", active);
+  formdata.append("phone", phone);
   if (password) {
     formdata.append("password", password);
   }
