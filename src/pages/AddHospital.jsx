@@ -78,9 +78,6 @@ const AddHospital = () => {
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log("name ", name);
-    console.log("value ", value);
-
     setHospitalData((prev) => {
       const updatedData = { ...prev, [name]: value };
       if (name === "state_id") {
@@ -89,9 +86,6 @@ const AddHospital = () => {
       return updatedData;
     });
   };
-
-  console.log(hospitalData);
-
   const handleSpecializationChange = (selectedSpecializationIds) => {
     setHospitalData((prev) => ({
       ...prev,
