@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
+      coupon_excel_export: "Excel Sheet",
       coupon_exist: "No data found for this user",
       coupon_search: "Search about user...",
       user_Info: "User Info",
@@ -474,10 +475,10 @@ const resources = {
       "Click the camera icon to upload profile image",
     services: "Services",
     coupon_search_alert: "fill search input please",
-    coupon_excel: "Excel Sheet",
   },
   ar: {
     translation: {
+      coupon_excel_export: "تصدير ملف اكسيل",
       user_Info: "بيانات المستخدم",
       coupon_exist: "لا توجد بيانات لهذا المستخدم",
       coupon_search: "البحث باسم المستخدم",
@@ -932,7 +933,6 @@ const resources = {
       "Click the camera icon to upload profile image":
         "انقر على أيقونة الكاميرا لرفع صورة الملف الشخصي",
       coupon_search_alert: "يرجى مل حقل البحث",
-      coupon_excel: "تصدير ملف اكسيل",
     },
   },
 };
