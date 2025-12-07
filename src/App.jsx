@@ -82,6 +82,7 @@ import UpdateAdmin from "./pages/UpdateAdmin";
 import HospitalServicesDetails from "./pages/HospitalServicesDetails";
 import HomeVisitBookingsDetails from "./pages/HomeVisitBookingsDetails";
 import HomeVisitServiceBookingDetails from "./pages/HomeVisitServiceBookingDetails";
+import CouponDetails from "./pages/CouponDetails";
 
 const queryClient = new QueryClient();
 
@@ -432,6 +433,15 @@ const router = createBrowserRouter([
               </PermissionWrapper>
             ),
           },
+          {
+            path: "coupons/:couponId",
+            element: (
+              <PermissionWrapper permissionName="coupons-show">
+                <CouponDetails />
+              </PermissionWrapper>
+            ),
+          },
+
           { path: "financial", element: <Financial /> },
           {
             path: "recharge-card",

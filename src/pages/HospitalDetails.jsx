@@ -47,8 +47,6 @@ const HospitalDetails = () => {
     queryFn: () => getSpecificHospital({ id: HospitalId, token }),
   });
 
-  console.log(hospital);
-
   const { mutate: handleDelete, isLoading: isDeleting } = useMutation({
     mutationFn: () => deleteHospital({ id: HospitalId, token }),
     onSuccess: () => {

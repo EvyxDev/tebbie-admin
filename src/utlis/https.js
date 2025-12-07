@@ -151,6 +151,29 @@ export const getSpecificDoctor = async ({ token, id }) => {
     throw error;
   }
 };
+
+export const getSpecificCoupon = async ({ token, id }) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/coupons/${id}/usage`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteDoctor = async ({ id, token }) => {
   try {
     const response = await fetch(`${API_URL}/dashboard/v1/doctors/${id}`, {
@@ -2067,12 +2090,16 @@ export const UpdateCoupon = async ({
   code,
   type,
   amount,
+  status,
+  max_used,
+  expire_date,
   id,
   originalCoupon, // إضافة بيانات الكوبون الأصلية للمقارنة
   _method = "PATCH",
 }) => {
   const formdata = new FormData();
   formdata.append("_method", _method);
+  formdata.append("status", status);
 
   // إضافة الحقول التي تغيرت فقط
   if (code && code !== originalCoupon.code) {
@@ -2083,6 +2110,13 @@ export const UpdateCoupon = async ({
   }
   if (amount && amount !== originalCoupon.amount) {
     formdata.append("amount", amount);
+  }
+
+  if (max_used && max_used !== originalCoupon.max_used) {
+    formdata.append("max_used", max_used);
+  }
+  if (expire_date && expire_date !== originalCoupon.expire_date) {
+    formdata.append("expire_date", expire_date);
   }
 
   try {

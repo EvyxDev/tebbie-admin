@@ -81,6 +81,7 @@ export const pageTranslations = {
     "/tebbie-wallet": "Tebbie Wallet",
     "/hospital-wallet": "Hospital Wallets",
     "/home-visit-services": "Home Visit Services",
+    "/coupons/:couponId": "Coupon Details",
     default: "Unknown Page",
   },
   ar: {
@@ -166,6 +167,7 @@ export const pageTranslations = {
     "/hospital-wallet": "محفظة المستشفيات",
     "/home-visit-services": "خدمات الزيارات المنزلية",
     "/hospital-services-report/:id": "تقرير خدمات المستشفي",
+    "/coupons/:couponId": "تفاصيل الكوبون",
     default: "الصفحة غير معروفة",
   },
 };

@@ -19,11 +19,13 @@ import {
   DialogContent,
   DialogTitle,
   Button,
+  Switch,
 } from "@mui/material";
 import {
   hasPermission,
   getPermissionDisplayName,
 } from "../utlis/permissionUtils";
+import { Link } from "react-router-dom";
 
 const token = localStorage.getItem("authToken");
 
@@ -46,6 +48,9 @@ const Coupons = () => {
     code: "",
     type: "",
     amount: "",
+    status: 1,
+    max_used: "",
+    expire_date: "",
   });
 
   const couponsPerPage = 5;
@@ -58,9 +63,18 @@ const Coupons = () => {
     queryKey: ["Coupons", token],
     queryFn: () => getCoupons({ token }),
   });
-
   const { mutate: handleUpdate } = useMutation({
-    mutationFn: ({ id, token, code, type, amount, originalCoupon }) => {
+    mutationFn: ({
+      id,
+      token,
+      code,
+      type,
+      amount,
+      status,
+      max_used,
+      expire_date,
+      originalCoupon,
+    }) => {
       if (!hasPermission("coupons-update")) {
         throw new Error(
           `You don't have permission to ${getPermissionDisplayName(
@@ -68,7 +82,17 @@ const Coupons = () => {
           )}`
         );
       }
-      return UpdateCoupon({ id, token, code, type, amount, originalCoupon }); // تمرير originalCoupon
+      return UpdateCoupon({
+        id,
+        token,
+        code,
+        type,
+        amount,
+        status,
+        max_used,
+        expire_date,
+        originalCoupon,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["Coupons", token]);
@@ -181,16 +205,24 @@ const Coupons = () => {
   };
 
   const handleEditClick = (coupon) => {
+    console.log(coupon);
+
     setEditingCoupon(coupon.id);
     setUpdatedCoupon({
       code: coupon.code,
       type: coupon.type,
       amount: coupon.amount,
+      status: coupon.status,
+      max_used: coupon.max_used,
+      expire_date: coupon.expire_date,
     });
   };
 
   const handleSaveClick = (id) => {
     const originalCoupon = couponData.find((coupon) => coupon.id === id);
+    console.log("originalCoupon ", originalCoupon);
+    console.log("updatedCoupon ", updatedCoupon);
+
     handleUpdate({ id, token, ...updatedCoupon, originalCoupon });
   };
   const filteredCoupons = useMemo(() => {
@@ -236,6 +268,11 @@ const Coupons = () => {
                 <th className="py-3 px-6 text-center">{t("code")}</th>
                 <th className="py-3 px-6 text-center">{t("type")}</th>
                 <th className="py-3 px-6 text-center">{t("amount")}</th>
+                <th className="py-3 px-6 text-center">
+                  {t("coupon_status")}
+                </th>{" "}
+                <th className="py-3 px-6 text-center">{t("max_usage")}</th>{" "}
+                <th className="py-3 px-6 text-center">{t("expire_date")}</th>{" "}
                 <th className="py-3 px-6 text-center">{t("Actions")}</th>
               </tr>
             </thead>
@@ -272,7 +309,12 @@ const Coupons = () => {
                         className="border border-gray-300 rounded p-2 w-full"
                       />
                     ) : (
-                      coupon.code
+                      <Link
+                        to={`/coupons/${coupon.id}`}
+                        className="text-blue-500"
+                      >
+                        {coupon.code}
+                      </Link>
                     )}
                   </td>
                   <td className="py-3 px-6 text-center">
@@ -313,6 +355,81 @@ const Coupons = () => {
                       coupon.amount
                     )}
                   </td>
+                  {/* status */}
+                  <td className="py-3 px-6 text-center">
+                    <Switch
+                      checked={
+                        editingCoupon === coupon.id
+                          ? Boolean(Number(updatedCoupon.status))
+                          : Boolean(Number(coupon.status))
+                      }
+                      onChange={(e) => {
+                        if (editingCoupon !== coupon.id) return;
+
+                        setUpdatedCoupon((prev) => ({
+                          ...prev,
+                          status: e.target.checked ? 1 : 0,
+                        }));
+                      }}
+                      color="primary"
+                      disabled={editingCoupon !== coupon.id}
+                    />
+                  </td>
+
+                  {/* max_usage */}
+                  <td className="py-3 px-6 text-center">
+                    {editingCoupon === coupon.id ? (
+                      <input
+                        type="number"
+                        min="0"
+                        value={updatedCoupon.max_used ?? ""}
+                        onChange={(e) =>
+                          setUpdatedCoupon((prev) => ({
+                            ...prev,
+                            max_used: e.target.value,
+                          }))
+                        }
+                        className="border border-gray-300 rounded p-2 w-full"
+                      />
+                    ) : (
+                      coupon.max_used
+                    )}
+                  </td>
+
+                  {/* expire date */}
+
+                  <td className="py-3 px-6 text-center">
+                    {editingCoupon === coupon.id ? (
+                      <input
+                        type="date"
+                        value={
+                          updatedCoupon.expire_date
+                            ? updatedCoupon.expire_date.split("T")[0]
+                            : ""
+                        }
+                        min={new Date().toISOString().split("T")[0]}
+                        onChange={(e) =>
+                          setUpdatedCoupon((prev) => ({
+                            ...prev,
+                            expire_date: e.target.value,
+                          }))
+                        }
+                        className="border border-gray-300 rounded p-2 w-full"
+                      />
+                    ) : coupon.expire_date ? (
+                      new Date(coupon.expire_date).toLocaleDateString(
+                        i18n.language,
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
+                    ) : (
+                      <>{i18n.language === "ar" ? "لا يوجد" : "null"}</>
+                    )}
+                  </td>
+
                   <td className="py-3 px-6 text-center">
                     <div className="flex justify-center gap-4">
                       {editingCoupon === coupon.id ? (

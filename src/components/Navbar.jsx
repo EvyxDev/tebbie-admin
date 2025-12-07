@@ -24,6 +24,9 @@ const Navbar = () => {
     if (pathname.startsWith("/hospitals/")) {
       return pageTranslations[language]["/hospitals/:HospitalId"];
     }
+    if (pathname.startsWith("/coupons/")) {
+      return pageTranslations[language]["/coupons/:couponId"];
+    }
     if (pathname.startsWith("/recharge-card/add-card")) {
       return pageTranslations[language]["/recharge-card/add-card"];
     }
@@ -103,6 +106,7 @@ const Navbar = () => {
 
   const pageName = translatePageName(location.pathname);
   const direction = language === "ar" ? "rtl" : "ltr";
+  console.log(pageName);
 
   return (
     <nav

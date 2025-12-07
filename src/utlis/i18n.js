@@ -4,6 +4,9 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
+      coupon_exist: "No data found for this user",
+      coupon_search: "Search about user...",
+      user_Info: "User Info",
       "search-placeholder": "Search here...",
       searchByName: "Search by Name",
       gender: "Gender",
@@ -96,6 +99,9 @@ const resources = {
       doctor: "doctor",
       AddCard: "Add Card",
       Actions: "Actions",
+      coupon_status: "status",
+      max_usage: "max usage",
+      expire_date: "Expiration date",
       "add-doctor": "add doctor",
       "update-doctor": "update doctor",
       new: "new",
@@ -467,9 +473,13 @@ const resources = {
     "Click the camera icon to upload profile image":
       "Click the camera icon to upload profile image",
     services: "Services",
+    coupon_search_alert: "fill search input please",
   },
   ar: {
     translation: {
+      user_Info: "بيانات المستخدم",
+      coupon_exist: "لا توجد بيانات لهذا المستخدم",
+      coupon_search: "البحث باسم المستخدم",
       are_you_sure: "هل أنت متأكد؟",
       cannotRestoreBookingAfterCancel:
         "لن تتمكن من استرجاع هذا الحجز بعد الإلغاء",
@@ -586,6 +596,9 @@ const resources = {
       "add-doctor": "اضافة دكتور",
       AddCard: "اضافة كارت",
       Actions: "الإجراءات",
+      coupon_status: "الحالة",
+      max_usage: "الحد الأقصى للاستخدام",
+      expire_date: "تاريخ الأنتهاء",
       new: "جديد",
       "update-doctor": "تعديل بيانات الدكتور",
       AvilableDoctors: "الدكاتره المتاحين",
@@ -917,6 +930,7 @@ const resources = {
       searchByBatchNumber: "البحث برقم الدفعة",
       "Click the camera icon to upload profile image":
         "انقر على أيقونة الكاميرا لرفع صورة الملف الشخصي",
+      coupon_search_alert: "يرجى مل حقل البحث",
     },
   },
 };
