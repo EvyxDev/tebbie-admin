@@ -7,6 +7,8 @@ import CouponSearch from "./CouponSearch";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "./Loader";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const CouponDetails = () => {
   const { couponId } = useParams();
@@ -31,6 +33,20 @@ const CouponDetails = () => {
     }
   }, [coupon]);
 
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(coupon?.usage);
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Users");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    saveAs(blob, "users.xlsx");
+  };
+
   const handleSearch = () => {
     // if (searchTerm.length === 0) return toast.error(t("coupon_search_alert"));
     const filteredUsers = coupon?.usage.filter((user) =>
@@ -46,6 +62,7 @@ const CouponDetails = () => {
     <div className=" py-10 w-[83%] mx-auto" dir={isArabic ? "rtl" : "ltr"}>
       {filteredUsage && (
         <CouponSearch
+          exportToExcel={exportToExcel}
           handleSearch={handleSearch}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

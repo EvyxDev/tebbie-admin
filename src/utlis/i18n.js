@@ -474,6 +474,7 @@ const resources = {
       "Click the camera icon to upload profile image",
     services: "Services",
     coupon_search_alert: "fill search input please",
+    coupon_excel: "Excel Sheet",
   },
   ar: {
     translation: {
@@ -931,6 +932,7 @@ const resources = {
       "Click the camera icon to upload profile image":
         "انقر على أيقونة الكاميرا لرفع صورة الملف الشخصي",
       coupon_search_alert: "يرجى مل حقل البحث",
+      coupon_excel: "تصدير ملف اكسيل",
     },
   },
 };
