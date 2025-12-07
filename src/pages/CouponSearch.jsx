@@ -33,7 +33,7 @@ const CouponSearch = ({
           onClick={exportToExcel}
           className="px-5 py-3 hover:bg-[#048c87] w-auto flex justify-center items-center text-white gap-2 bg-gradient-to-bl from-[#33A9C7] to-[#3AAB95] text-md rounded-[8px] focus:outline-none text-center"
         >
-          {t("coupon_excel")}
+          {t("coupon_excel_export")}
           <span>
             <FileSpreadsheet />
           </span>
