@@ -43,6 +43,8 @@ const HospitalReportDetails = () => {
     select: (data) => data,
   });
 
+  console.log(hospitalData);
+
   // Pagination logic
   const indexOfLastState = currentPage * statesPerPage;
   const indexOfFirstState = indexOfLastState - statesPerPage;
@@ -118,6 +120,8 @@ const HospitalReportDetails = () => {
         [t("cancellation_reason")]: data.cancellation_reason || t("Na"),
         [t("tabi_commission")]: data.tabi_commission || t("Na"),
         [t("hospital_commission")]: data.hospital_commission || t("Na"),
+        [t("original_price")]: data.original_price || t("Na"),
+        [t("discount_amount")]: data.discount_amount || t("Na"),
         [t("final_price")]: data.final_price || t("Na"),
         [t("booking_date")]: data.booking_date || t("Na"),
       }))
@@ -230,6 +234,8 @@ const HospitalReportDetails = () => {
                   "cancellation_reason",
                   "tabi_commission",
                   "hospital_commission",
+                  "original_price",
+                  "discount_amount",
                   "final_price",
                   "booking_date",
                   "",
@@ -303,6 +309,12 @@ const HospitalReportDetails = () => {
                     </td>
                     <td className="py-3 px-3 text-center">
                       {data.hospital_commission || t("Na")}
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      {data.original_price || t("Na")}
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      {data.discount_amount || t("Na")}
                     </td>
                     <td className="py-3 px-3 text-center">
                       {data.final_price || t("Na")}
