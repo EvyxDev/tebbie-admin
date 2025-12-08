@@ -1,17 +1,12 @@
-import { FileSpreadsheet, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
-const CouponSearch = ({
-  exportToExcel,
-  handleSearch,
-  setSearchTerm,
-  searchTerm,
-}) => {
+const CouponSearch = ({ handleSearch, setSearchTerm, searchTerm }) => {
   const { t, i18n } = useTranslation();
   return (
-    <div className="w-full flex justify-between items-center bg-white rounded-md mb-5 p-10">
-      <div className="relative w-1/2">
+    <div className="w-[83%] bg-white rounded-md mb-5 md:mb-10">
+      <div className="relative">
         <input
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyUp={handleSearch}
@@ -27,17 +22,6 @@ const CouponSearch = ({
         >
           <Search onClick={handleSearch} className="text-gray-500" size={20} />
         </div>
-      </div>
-      <div className=" ms-auto text-end">
-        <button
-          onClick={exportToExcel}
-          className="px-5 py-3 hover:bg-[#048c87] w-auto flex justify-center items-center text-white gap-2 bg-gradient-to-bl from-[#33A9C7] to-[#3AAB95] text-md rounded-[8px] focus:outline-none text-center"
-        >
-          {t("coupon_excel_export")}
-          <span>
-            <FileSpreadsheet />
-          </span>
-        </button>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "./ErrorMessage";
 import Loader from "./Loader";
@@ -26,6 +26,9 @@ import {
   getPermissionDisplayName,
 } from "../utlis/permissionUtils";
 import { Link } from "react-router-dom";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { FileSpreadsheet } from "lucide-react";
 
 const token = localStorage.getItem("authToken");
 
@@ -33,7 +36,8 @@ const Coupons = () => {
   const queryClient = useQueryClient();
   const { t, i18n } = useTranslation();
   const direction = i18n.language === "ar" ? "rtl" : "ltr";
-
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
@@ -225,6 +229,49 @@ const Coupons = () => {
 
     handleUpdate({ id, token, ...updatedCoupon, originalCoupon });
   };
+
+  const filterByDateRange = useCallback(
+    (cards) => {
+      if (!dateFrom && !dateTo) return cards;
+
+      return cards.filter((card) => {
+        if (!card.expire_date) return false;
+
+        const cardDate = new Date(card.expire_date);
+        cardDate.setHours(0, 0, 0, 0);
+
+        if (dateFrom && dateTo) {
+          const fromDate = new Date(dateFrom);
+          fromDate.setHours(0, 0, 0, 0);
+          fromDate.setDate(fromDate.getDate() - 1);
+
+          const toDate = new Date(dateTo);
+          toDate.setHours(23, 59, 59, 999);
+          toDate.setDate(toDate.getDate() + 1);
+
+          return cardDate >= fromDate && cardDate <= toDate;
+        } else if (dateFrom) {
+          const fromDate = new Date(dateFrom);
+          fromDate.setHours(0, 0, 0, 0);
+          fromDate.setDate(fromDate.getDate() - 1);
+          const now = new Date();
+          now.setHours(23, 59, 59, 999);
+
+          return cardDate >= fromDate && cardDate <= now;
+        } else if (dateTo) {
+          const toDate = new Date(dateTo);
+          toDate.setHours(23, 59, 59, 999);
+          toDate.setDate(toDate.getDate() + 1);
+
+          return cardDate <= toDate;
+        }
+
+        return true;
+      });
+    },
+    [dateFrom, dateTo]
+  );
+
   const filteredCoupons = useMemo(() => {
     if (!couponData) return [];
     return couponData.filter((coupon) =>
@@ -232,32 +279,109 @@ const Coupons = () => {
     );
   }, [couponData, searchTerm]);
 
+  // Apply date range filter AFTER search filter
+  const filteredByDate = useMemo(() => {
+    return filterByDateRange(filteredCoupons);
+  }, [filteredCoupons, dateFrom, dateTo]);
+
   const indexOfLastCoupon = currentPage * couponsPerPage;
   const indexOfFirstCoupon = indexOfLastCoupon - couponsPerPage;
-  const currentCoupons = filteredCoupons.slice(
+
+  const currentCoupons = filteredByDate.slice(
     indexOfFirstCoupon,
     indexOfLastCoupon
   );
 
   const totalPages =
-    filteredCoupons.length > 0
-      ? Math.ceil(filteredCoupons.length / couponsPerPage)
+    filteredByDate.length > 0
+      ? Math.ceil(filteredByDate.length / couponsPerPage)
       : 0;
+
+  const handleDateFromChange = (e) => {
+    setDateFrom(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleDateToChange = (e) => {
+    setDateTo(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(couponData);
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Coupons");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    saveAs(blob, "coupons.xlsx");
+  };
+
+  // Export ALL filtered rows (client-side filtered)
 
   if (isLoading) return <Loader />;
   if (error) return <ErrorMessage message={t("errorFetchingCoupons")} />;
 
   return (
     <section dir={direction} className="container mx-auto py-8">
-      <div className="rounded-3xl md:p-8 p-4 m-4 bg-white overflow-auto ">
+      <div className="rounded-3xl md:p-8 p-5 m-4 bg-white overflow-auto ">
         <div className="mb-6 flex flex-col md:flex-row justify-between items-center w-full gap-4">
           <input
             type="text"
             placeholder={t("couponSearchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-1/3 p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
+            className="w-full md:w-[30%] p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
           />
+
+          <div className="-mt-6 w-[52%] flex gap-4 md:flex-row items-center">
+            <div className="flex-1">
+              <label
+                htmlFor="dateFrom"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {t("date_from")}
+              </label>
+              <input
+                type="date"
+                id="dateFrom"
+                value={dateFrom}
+                onChange={handleDateFromChange}
+                className="w-full p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
+              />
+            </div>
+            <div className="flex-1">
+              <label
+                htmlFor="dateTo"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {t("date_to")}
+              </label>
+              <input
+                type="date"
+                id="dateTo"
+                value={dateTo}
+                onChange={handleDateToChange}
+                className="w-full p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
+              />
+            </div>
+          </div>
+
+          <div className="w-[15%] text-end">
+            <button
+              onClick={exportToExcel}
+              className="px-5 w-full md:w-auto py-2.5 hover:bg-[#048c87] flex justify-center items-center text-white gap-2 bg-gradient-to-bl from-[#33A9C7] to-[#3AAB95] text-md rounded-[8px] focus:outline-none text-center"
+            >
+              {t("coupon_excel_export")}
+              <span>
+                <FileSpreadsheet />
+              </span>
+            </button>
+          </div>
         </div>
 
         <div className="overflow-x-auto md:w-full w-[90vw]">
