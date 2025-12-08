@@ -102,7 +102,7 @@ const CouponDetails = () => {
   // Apply date range filter AFTER search filter
   const filteredByDate = useMemo(() => {
     return filterByDateRange(filteredUsage);
-  }, [filteredUsage, dateFrom, dateTo]);
+  }, [filteredUsage, filterByDateRange]);
 
   const handleDateFromChange = (e) => {
     setDateFrom(e.target.value);
@@ -126,7 +126,10 @@ const CouponDetails = () => {
               setSearchTerm={setSearchTerm}
             />
 
-            <div className="w-[15%]">
+            <div
+              className="w-full
+             md:w-[15%]"
+            >
               <button
                 onClick={exportToExcel}
                 className="px-5 w-full md:w-auto py-2.5 hover:bg-[#048c87] flex justify-center items-center text-white gap-2 bg-gradient-to-bl from-[#33A9C7] to-[#3AAB95] text-md rounded-[8px] focus:outline-none text-center"

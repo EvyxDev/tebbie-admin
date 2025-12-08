@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const CouponSearch = ({ handleSearch, setSearchTerm, searchTerm }) => {
   const { t, i18n } = useTranslation();
   return (
-    <div className="w-[83%] bg-white rounded-md mb-5 md:mb-10">
+    <div className="w-full md:w-[83%] bg-white rounded-md mb-5 md:mb-10">
       <div className="relative">
         <input
           onChange={(e) => setSearchTerm(e.target.value)}

@@ -282,7 +282,7 @@ const Coupons = () => {
   // Apply date range filter AFTER search filter
   const filteredByDate = useMemo(() => {
     return filterByDateRange(filteredCoupons);
-  }, [filteredCoupons, dateFrom, dateTo]);
+  }, [filteredCoupons, filterByDateRange]);
 
   const indexOfLastCoupon = currentPage * couponsPerPage;
   const indexOfFirstCoupon = indexOfLastCoupon - couponsPerPage;
@@ -328,7 +328,7 @@ const Coupons = () => {
 
   return (
     <section dir={direction} className="container mx-auto py-8">
-      <div className="rounded-3xl md:p-8 p-5 m-4 bg-white overflow-auto ">
+      <div className="rounded-3xl md:p-8 p-5 bg-white overflow-auto ">
         <div className="mb-6 flex flex-col md:flex-row justify-between items-center w-full gap-4">
           <input
             type="text"
@@ -338,7 +338,7 @@ const Coupons = () => {
             className="w-full md:w-[30%] p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
           />
 
-          <div className="-mt-6 w-[52%] flex gap-4 md:flex-row items-center">
+          <div className="md:-mt-6 w-full md:w-[52%] flex gap-4 md:flex-row items-center">
             <div className="flex-1">
               <label
                 htmlFor="dateFrom"
@@ -371,7 +371,7 @@ const Coupons = () => {
             </div>
           </div>
 
-          <div className="w-[15%] text-end">
+          <div className="w-full md:w-[15%] text-end">
             <button
               onClick={exportToExcel}
               className="px-5 w-full md:w-auto py-2.5 hover:bg-[#048c87] flex justify-center items-center text-white gap-2 bg-gradient-to-bl from-[#33A9C7] to-[#3AAB95] text-md rounded-[8px] focus:outline-none text-center"
