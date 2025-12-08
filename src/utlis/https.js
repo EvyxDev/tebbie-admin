@@ -4739,6 +4739,8 @@ export const addHomeVisitService = async ({
   name,
   type,
   price,
+  hospital_price,
+  tabi_price,
 }) => {
   try {
     const response = await fetch(
@@ -4754,6 +4756,8 @@ export const addHomeVisitService = async ({
           name,
           type,
           price,
+          hospital_price,
+          tabi_price,
         }),
       }
     );

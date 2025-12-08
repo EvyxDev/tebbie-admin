@@ -179,7 +179,10 @@ const HomeVisitServicesTable = ({
                   {t("service_type")}
                 </th>
                 <th className="py-3 px-4 text-center whitespace-nowrap border-b border-gray-200">
-                  {t("price")}
+                  {t("hospital_price")}
+                </th>
+                <th className="py-3 px-4 text-center whitespace-nowrap border-b border-gray-200">
+                  {t("tabi_price")}
                 </th>
                 <th className="py-3 px-4 text-center whitespace-nowrap border-b border-gray-200">
                   {t("status")}
@@ -219,8 +222,15 @@ const HomeVisitServicesTable = ({
                     </td>
                     <td className="py-3 px-4 text-center whitespace-nowrap">
                       <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm font-medium">
-                        {data?.price
-                          ? `$${parseFloat(data.price).toFixed(2)}`
+                        {data?.hospital_price
+                          ? `$${parseFloat(data.hospital_price).toFixed(2)}`
+                          : t("Na")}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-center whitespace-nowrap">
+                      <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm font-medium">
+                        {data?.tabi_price
+                          ? `$${parseFloat(data.tabi_price).toFixed(2)}`
                           : t("Na")}
                       </span>
                     </td>
