@@ -71,6 +71,7 @@ const AddHomeVisitServiceDialog = ({ isOpen, onClose, editData }) => {
           tabi_price: editData.tabi_price || "",
           status: editData.status || "active",
         });
+        console.log(editData);
       } else {
         setFormData({
           hospital_id: "",
@@ -102,13 +103,15 @@ const AddHomeVisitServiceDialog = ({ isOpen, onClose, editData }) => {
       !formData.hospital_id ||
       !formData.name ||
       !formData.type ||
-      !formData.price
+      !formData.hospital_price ||
+      !formData.tabi_price
     ) {
       toast.error(t("please_fill_all_fields"));
       return;
     }
 
     if (editData) {
+      console.log("formData ", formData);
       updateMutation.mutate(formData);
     } else {
       addMutation.mutate(formData);
