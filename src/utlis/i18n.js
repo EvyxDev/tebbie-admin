@@ -203,6 +203,7 @@ const resources = {
       couponSearchPlaceholder: "Search by coupon code",
       enterCode: "Enter new code",
       enterAmount: "Enter new amount",
+      enter_max_used: "max used",
       fixed: "Fixed",
       percentage: "Percentage",
       noCouponsFound: "No coupons found",
@@ -378,6 +379,15 @@ const resources = {
 
       tabi_commission: "Tabi commission",
       hospital_commission: "Hospital commission",
+      location_price: "Location price",
+      cancel_btn: "Cancel",
+      cancel_validate: {
+        title: "Are you sure you want to cacel this home booking",
+        description:
+          "if you click cancel you cannot able to get this booking data again",
+        accept: "Accept",
+        cancel: "Cancel",
+      },
       homeVisitReport: "Home Visit Report",
       home_visit_bookings_details: "Home Visit Bookings Details",
       service_booking_details: "Service Booking Details",
@@ -690,6 +700,7 @@ const resources = {
       couponSearchPlaceholder: "البحث بكود الكوبون",
       enterCode: "أدخل كود جديد",
       enterAmount: "أدخل مبلغ جديد",
+      enter_max_used: "أدخل عدد الاستخدام ",
       fixed: "ثابت",
       percentage: "نسبة مئوية",
       noCouponsFound: "لا توجد كوبونات مطابقة",
@@ -854,6 +865,15 @@ const resources = {
       human_type: "الجنس",
       tabi_commission: "عمولة طبي",
       hospital_commission: "عمولة المستشفى",
+      location_price: "سعر المكان",
+      cancel_btn: "إلغاء",
+      cancel_validate: {
+        title: "هل انت متأكد من إلغاء هذا الحجز",
+        description:
+          "لو ضغط علي موافق لن تتمكن من الوصول الي بيانات هذا الحجز مرة اخري",
+        accept: "موافق",
+        cancel: "إلغاء",
+      },
       whatsapp: "واتساب",
       batchNumber: "رقم الدفعة",
       usedAt: "تاريخ الاستخدام",

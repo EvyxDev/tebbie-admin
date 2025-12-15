@@ -46,6 +46,9 @@ const Coupons = () => {
     code: "",
     type: "fixed",
     amount: "",
+    add_max_used: "",
+    add_expire_date: "",
+    status: 0,
   });
   const [editingCoupon, setEditingCoupon] = useState(null);
   const [updatedCoupon, setUpdatedCoupon] = useState({
@@ -110,7 +113,14 @@ const Coupons = () => {
   });
 
   const { mutate: handleAdd } = useMutation({
-    mutationFn: ({ code, type, amount }) => {
+    mutationFn: ({
+      code,
+      type,
+      amount,
+      status,
+      add_max_used,
+      add_expire_date,
+    }) => {
       if (!hasPermission("coupons-store")) {
         throw new Error(
           `You don't have permission to ${getPermissionDisplayName(
@@ -118,17 +128,47 @@ const Coupons = () => {
           )}`
         );
       }
-      return newCoupon({ code, type, amount, token });
+      return newCoupon({
+        code,
+        type,
+        amount,
+        token,
+        status,
+        add_max_used,
+        add_expire_date,
+      });
     },
-    onMutate: async ({ code, type, amount }) => {
+    onMutate: async ({
+      code,
+      type,
+      amount,
+      status,
+      add_max_used,
+      add_expire_date,
+    }) => {
       await queryClient.cancelQueries(["Coupons", token]);
       const previousCoupons = queryClient.getQueryData(["Coupons", token]);
-      const newCouponData = { id: `temp-${Date.now()}`, code, type, amount };
+      const newCouponData = {
+        id: `temp-${Date.now()}`,
+        code,
+        type,
+        amount,
+        status,
+        add_max_used,
+        add_expire_date,
+      };
       queryClient.setQueryData(["Coupons", token], (oldCoupons) => [
         ...(oldCoupons || []),
         newCouponData,
       ]);
-      setFormState({ code: "", type: "fixed", amount: "" });
+      setFormState({
+        code: "",
+        type: "fixed",
+        amount: "",
+        status: 0,
+        add_max_used: "",
+        add_expire_date: "",
+      });
       return { previousCoupons };
     },
     onError: (error, _, context) => {
@@ -182,10 +222,13 @@ const Coupons = () => {
     }));
   };
 
+  console.log(formState);
+
   const handleAddClick = () => {
-    const { code, type, amount } = formState;
+    const { code, type, amount, status, add_max_used, add_expire_date } =
+      formState;
     if (code.trim() && amount) {
-      handleAdd({ code, type, amount });
+      handleAdd({ code, type, amount, status, add_max_used, add_expire_date });
     } else {
       toast.error(t("fillAllFields"));
     }
@@ -599,8 +642,8 @@ const Coupons = () => {
               ))}
               {hasPermission("coupons-store") && (
                 <tr className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-center">{t("new")}</td>
-                  <td className="py-3 px-6 text-center shrink-0  min-w-48">
+                  <td className="py-3 px-2 text-center">{t("new")}</td>
+                  <td className="py-3 px-2 text-center shrink-0  min-w-48">
                     <input
                       type="text"
                       name="code"
@@ -610,7 +653,7 @@ const Coupons = () => {
                       className="border border-gray-300 rounded p-2 w-full"
                     />
                   </td>
-                  <td className="py-3 px-6 text-center shrink-0  min-w-48">
+                  <td className="py-3 px-2 text-center shrink-0  min-w-48">
                     <select
                       name="type"
                       value={formState.type}
@@ -621,7 +664,7 @@ const Coupons = () => {
                       <option value="percentage">{t("percentage")}</option>
                     </select>
                   </td>
-                  <td className="py-3 px-6 text-center shrink-0 min-w-48">
+                  <td className="py-3 px-2 text-center shrink-0 min-w-48">
                     <input
                       type="number"
                       name="amount"
@@ -631,6 +674,46 @@ const Coupons = () => {
                       className="border border-gray-300 rounded p-2 w-full"
                     />
                   </td>
+
+                  {/* status */}
+                  <td className="py-3 px-6 text-center">
+                    <Switch
+                      checked={formState.status === 1}
+                      onChange={(e) => {
+                        setFormState((prev) => ({
+                          ...prev,
+                          status: e.target.checked ? 1 : 0,
+                        }));
+                      }}
+                      name="status"
+                    />
+                  </td>
+
+                  {/* max_used */}
+                  <td className="py-3 px-1 text-center shrink-0 min-w-48">
+                    <input
+                      type="number"
+                      name="add_max_used"
+                      placeholder={t("enter_max_used")}
+                      value={formState.add_max_used}
+                      onChange={handleInputChange}
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                  </td>
+
+                  {/* expire_date */}
+
+                  <td className="py-3 px-1 text-center">
+                    <input
+                      type="date"
+                      name="add_expire_date"
+                      value={formState.add_expire_date}
+                      onChange={handleInputChange}
+                      min={new Date().toISOString().split("T")[0]}
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                  </td>
+
                   <td className="py-3 px-6 text-center shrink-0  min-w-48">
                     <button
                       onClick={handleAddClick}

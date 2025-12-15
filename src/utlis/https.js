@@ -561,13 +561,24 @@ export const updateHospital = async ({
     }
   });
 
-  doctor_ids.forEach((id) => {
-    formdata.append("doctor_ids[]", id);
-  });
+  if (doctor_ids.length < 1) {
+    formdata.append("doctor_ids", []);
+  } else {
+    doctor_ids.forEach((id) => {
+      formdata.append("doctor_ids[]", id);
+    });
+  }
 
-  specialization_id.forEach((id) => {
-    formdata.append("specialization_id[]", id);
-  });
+  if (specialization_id.length < 1) {
+    formdata.append("specialization_id", []);
+  } else {
+    specialization_id.forEach((id) => {
+      formdata.append("specialization_id[]", id);
+    });
+  }
+
+  console.log("specialization_id ", specialization_id);
+  console.log("doctor_ids ", doctor_ids);
 
   try {
     const response = await fetch(`${API_URL}/dashboard/v1/hospitals/${id}`, {
@@ -2139,13 +2150,24 @@ export const UpdateCoupon = async ({
     throw error;
   }
 };
-export const newCoupon = async ({ token, code, type, amount }) => {
+export const newCoupon = async ({
+  token,
+  code,
+  type,
+  amount,
+  status,
+  add_max_used,
+  add_expire_date,
+}) => {
   const formdata = new FormData();
 
   // Required fields
   formdata.append("code", code);
   formdata.append("type", type);
   formdata.append("amount", amount);
+  formdata.append("status", status);
+  formdata.append("max_used", add_max_used);
+  formdata.append("expire_date", add_expire_date);
 
   try {
     const response = await fetch(`${API_URL}/dashboard/v1/coupons`, {
@@ -3865,7 +3887,31 @@ export const getHomeVisitServiceBookingDetails = async ({
   }
 };
 
-// decrement user wallet balance
+export const cancelHomeVisitServiceBooking = async ({ token, booking_id }) => {
+  if (!booking_id) {
+    throw new Error("booking_id is required");
+  }
+
+  const response = await fetch(
+    `${API_URL}/dashboard/v1/cancel-home-visit-bookings/${booking_id}`,
+    {
+      method: "POST",
+      headers: {
+        // "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Cancel failed: ${response.status} - ${errorText}`);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
 export const decrementUserWallet = async ({ token, userId, newBalance }) => {
   try {
     const formData = new FormData();
@@ -4782,6 +4828,8 @@ export const updateHomeVisitService = async ({
   type,
   price,
   status,
+  hospital_price,
+  tabi_price,
 }) => {
   try {
     const response = await fetch(
@@ -4798,6 +4846,8 @@ export const updateHomeVisitService = async ({
           type,
           price,
           status,
+          hospital_price,
+          tabi_price,
         }),
       }
     );

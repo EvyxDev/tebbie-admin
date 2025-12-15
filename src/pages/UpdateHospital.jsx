@@ -94,8 +94,6 @@ const UpdateHospital = () => {
         (spec) => spec.id
       );
 
-      console.log(hospital);
-
       setHospitalData({
         name: hospital.name || "",
         bio: hospital.bio || "",
@@ -131,6 +129,7 @@ const UpdateHospital = () => {
   };
 
   const handleSpecializationChange = (SpecializationIds) => {
+    console.log(SpecializationIds);
     setHospitalData((prev) => ({
       ...prev,
       specialization_id: SpecializationIds,
@@ -239,6 +238,8 @@ const UpdateHospital = () => {
       return;
     }
 
+    console.log("hospitalData " , hospitalData);
+    
     mutation.mutate({
       id: HospitalId,
       ...hospitalData,

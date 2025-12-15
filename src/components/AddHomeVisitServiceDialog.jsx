@@ -111,6 +111,7 @@ const AddHomeVisitServiceDialog = ({ isOpen, onClose, editData }) => {
     }
 
     if (editData) {
+      console.log(formData);
       console.log("formData ", formData);
       updateMutation.mutate(formData);
     } else {

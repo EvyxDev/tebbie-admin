@@ -1,22 +1,29 @@
 /* eslint-disable react/prop-types */
 import { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ErrorMessage from "./ErrorMessage";
 import Loader from "./Loader";
 import Pagination from "../components/Pagination";
-import { getHomeVisitServiceBookingDetails } from "../utlis/https";
+import {
+  cancelHomeVisitServiceBooking,
+  // cancelHomeVisitServiceBooking,
+  getHomeVisitServiceBookingDetails,
+} from "../utlis/https";
 import { utils, writeFile } from "xlsx";
 import { FaHome } from "react-icons/fa";
+import CancelModal from "../components/ui/CancelModal";
 
 const HomeVisitServiceBookingDetails = () => {
   const token = localStorage.getItem("authToken");
   const { hospitalId } = useParams();
   const { t, i18n } = useTranslation();
+  const [open, setOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const statesPerPage = 10;
+  const [booking_id, setBookingId] = useState("");
 
   const {
     data: bookings = [],
@@ -32,6 +39,20 @@ const HomeVisitServiceBookingDetails = () => {
     enabled: !!token && !!hospitalId,
     keepPreviousData: true,
   });
+
+  const { mutate: cancelBooking, isPending: cancelBookingLoading } =
+    useMutation({
+      mutationFn: ({ booking_id }) =>
+        cancelHomeVisitServiceBooking({
+          token,
+          booking_id,
+        }),
+      onSuccess: () => {
+        setOpen(false);
+      },
+    });
+
+  console.log(bookings);
 
   const bookingsList = useMemo(
     () => (Array.isArray(bookings) ? bookings : []),
@@ -68,9 +89,11 @@ const HomeVisitServiceBookingDetails = () => {
           [t("price")]: booking?.price ?? t("Na"),
           [t("tabi_commission")]: booking?.tabi_commission ?? t("Na"),
           [t("hospital_commission")]: booking?.hospital_commission ?? t("Na"),
+          [t("location_price")]: booking?.location_price ?? t("Na"),
           [t("status")]: booking?.status || t("Na"),
           [t("payment_status")]: booking?.payment_status || t("Na"),
           [t("notes")]: booking?.notes || t("Na"),
+          [t("cancel_btn")]: booking?.notes || t("Na"),
         }))
       );
       const wb = utils.book_new();
@@ -150,6 +173,15 @@ const HomeVisitServiceBookingDetails = () => {
     );
   };
 
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setBookingId(id);
+  };
+  const handleAcceptCancelBooking = () => {
+    cancelBooking({ booking_id });
+    setOpen(false);
+  };
+
   if (error) return <ErrorMessage message={error.message} />;
 
   return (
@@ -196,6 +228,9 @@ const HomeVisitServiceBookingDetails = () => {
                     {t("hospital_commission")}
                   </th>
                   <th className="py-3 px-4 text-center transition-colors whitespace-nowrap border-b border-gray-200">
+                    {t("location_price")}
+                  </th>
+                  <th className="py-3 px-4 text-center transition-colors whitespace-nowrap border-b border-gray-200">
                     {t("status")}
                   </th>
                   <th className="py-3 px-4 text-center transition-colors whitespace-nowrap border-b border-gray-200">
@@ -210,6 +245,7 @@ const HomeVisitServiceBookingDetails = () => {
                   <th className="py-3 px-4 text-center transition-colors whitespace-nowrap border-b border-gray-200">
                     {t("time")}
                   </th>
+                  <th className="py-3 px-4 text-center transition-colors whitespace-nowrap border-b border-gray-200"></th>
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm">
@@ -253,6 +289,9 @@ const HomeVisitServiceBookingDetails = () => {
                       <td className="py-3 px-4 text-center whitespace-nowrap">
                         {booking.hospital_commission ?? t("Na")}
                       </td>
+                      <td className="py-3 px-4 text-center whitespace-nowrap">
+                        {booking.location_price ?? t("Na")}
+                      </td>
                       <td className="py-3 px-4 text-center">
                         {renderStatus(booking.status)}
                       </td>
@@ -275,6 +314,23 @@ const HomeVisitServiceBookingDetails = () => {
                           ? `${booking.start_from} - ${booking.end_at}`
                           : t("Na")}
                       </td>
+                      <td className="py-3 px-4 text-center whitespace-nowrap">
+                        <button
+                          onClick={() => handleClickOpen(booking.booking_id)}
+                          disabled={
+                            booking.payment_status === "unpaid" ? true : false
+                          }
+                          className={`px-5 py-2 ${
+                            booking.payment_status === "unpaid"
+                              ? "bg-red-400 cursor-not-allowed"
+                              : "bg-red-500"
+                          }  flex items-center justify-center gap-2 text-white rounded-lg focus:outline-none transition-colors text-[11px]`}
+                        >
+                          {cancelBookingLoading
+                            ? t("cancel_btn") + "..."
+                            : t("cancel_btn")}
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
@@ -288,6 +344,12 @@ const HomeVisitServiceBookingDetails = () => {
             </table>
           </div>
         </div>
+
+        <CancelModal
+          handleAcceptCancelBooking={handleAcceptCancelBooking}
+          open={open}
+          setOpen={setOpen}
+        />
 
         {bookingsList.length > 0 && (
           <div className="flex justify-between items-end mt-4">
