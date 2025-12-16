@@ -561,20 +561,18 @@ export const updateHospital = async ({
     }
   });
 
-  if (doctor_ids.length < 1) {
-    formdata.append("doctor_ids", []);
+  // Doctor IDs
+  if (doctor_ids.length === 0) {
+    formdata.append("doctor_ids[]", JSON.stringify([]));
   } else {
-    doctor_ids.forEach((id) => {
-      formdata.append("doctor_ids[]", id);
-    });
+    formdata.append("doctor_ids[]", doctor_ids);
   }
 
-  if (specialization_id.length < 1) {
-    formdata.append("specialization_id", []);
+  // Specialization IDs
+  if (specialization_id.length === 0) {
+    formdata.append("specialization_id[]", JSON.stringify([]));
   } else {
-    specialization_id.forEach((id) => {
-      formdata.append("specialization_id[]", id);
-    });
+    formdata.append("specialization_id[]", specialization_id);
   }
 
   console.log("specialization_id ", specialization_id);

@@ -70,7 +70,7 @@ const UpdateHospital = () => {
     state: "",
     city: "",
     doctor_ids: [],
-    specialization_id: "",
+    specialization_id: [],
     media: [],
     old_media: [],
     active: false,
@@ -238,8 +238,8 @@ const UpdateHospital = () => {
       return;
     }
 
-    console.log("hospitalData " , hospitalData);
-    
+    console.log("hospitalData ", hospitalData);
+
     mutation.mutate({
       id: HospitalId,
       ...hospitalData,
@@ -276,6 +276,7 @@ const UpdateHospital = () => {
       value: data.id,
       label: data.name,
     })) || [];
+
   return (
     <section className="container mx-auto p-4 w-full ">
       <div
