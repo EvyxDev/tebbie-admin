@@ -3853,12 +3853,16 @@ export const getHomeVisitServiceBookingDetails = async ({
   token,
   hospital_id,
   service_id,
+  dateFrom,
+  dateTo,
 }) => {
   try {
     let url = `${API_URL}/dashboard/v1/home-visit-bookings-by-service-details`;
     const params = [];
     if (hospital_id) params.push(`hospital_id=${hospital_id}`);
     if (service_id) params.push(`service_id=${service_id}`);
+    if (dateFrom) params.push(`from_date=${dateFrom}`);
+    if (dateTo) params.push(`to_date=${dateTo}`);
     if (params.length > 0) url += `?${params.join("&")}`;
 
     const response = await fetch(url, {

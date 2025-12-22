@@ -8,7 +8,7 @@ import {
   UpdateCoupon,
   newCoupon,
 } from "../utlis/https";
-import { RiCoupon2Fill } from "react-icons/ri";
+// import { RiCoupon2Fill } from "react-icons/ri";
 import { AiFillDelete, AiFillEdit, AiFillPlusCircle } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -70,6 +70,7 @@ const Coupons = () => {
     queryKey: ["Coupons", token],
     queryFn: () => getCoupons({ token }),
   });
+
   const { mutate: handleUpdate } = useMutation({
     mutationFn: ({
       id,
@@ -221,8 +222,6 @@ const Coupons = () => {
       [name]: value,
     }));
   };
-
-  console.log(formState);
 
   const handleAddClick = () => {
     const { code, type, amount, status, add_max_used, add_expire_date } =
@@ -431,16 +430,17 @@ const Coupons = () => {
           <table className="min-w-full bg-white border border-gray-200 rounded-lg">
             <thead>
               <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-center">#</th>
-                <th className="py-3 px-6 text-center">{t("code")}</th>
-                <th className="py-3 px-6 text-center">{t("type")}</th>
-                <th className="py-3 px-6 text-center">{t("amount")}</th>
-                <th className="py-3 px-6 text-center">
+                {/* <th className="py-3  text-center">#</th> */}
+                <th className="py-3 px-2 text-center">{t("code")}</th>
+                <th className="py-3 px-2 text-center">{t("type")}</th>
+                <th className="py-3 px-2 text-center">{t("amount")}</th>
+                <th className="py-3 px-2 text-center">
                   {t("coupon_status")}
                 </th>{" "}
-                <th className="py-3 px-6 text-center">{t("max_usage")}</th>{" "}
-                <th className="py-3 px-6 text-center">{t("expire_date")}</th>{" "}
-                <th className="py-3 px-6 text-center">{t("Actions")}</th>
+                <th className="py-3 px-2 text-center">{t("max_usage")}</th>{" "}
+                <th className="py-3 px-2 text-center">{t("expire_date")}</th>{" "}
+                <th className="py-3 px-2 text-center">{t("users_count")}</th>{" "}
+                <th className="py-3 px-2 text-center">{t("Actions")}</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-lg font-light">
@@ -451,18 +451,18 @@ const Coupons = () => {
                   </td>
                 </tr>
               )}
-              {currentCoupons.map((coupon, index) => (
+              {currentCoupons.map((coupon) => (
                 <tr
                   key={coupon.id}
                   className={`border-b border-gray-200 hover:bg-gray-100 ${
                     coupon.id.toString().startsWith("temp-") ? "opacity-50" : ""
                   }`}
                 >
-                  <td className="py-3 px-6 text-center flex items-center justify-center gap-3">
+                  {/* <td className="py-3  text-center flex items-center justify-center gap-3">
                     {indexOfFirstCoupon + index + 1}
                     <RiCoupon2Fill />
-                  </td>
-                  <td className="py-3 px-6 text-center">
+                  </td> */}
+                  <td className="py-3 px-4 text-center">
                     {editingCoupon === coupon.id ? (
                       <input
                         type="text"
@@ -484,7 +484,7 @@ const Coupons = () => {
                       </Link>
                     )}
                   </td>
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-2 text-center">
                     {editingCoupon === coupon.id ? (
                       <select
                         value={updatedCoupon.type}
@@ -505,7 +505,7 @@ const Coupons = () => {
                       t("percentage")
                     )}
                   </td>
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-2 text-center">
                     {editingCoupon === coupon.id ? (
                       <input
                         type="number"
@@ -523,7 +523,7 @@ const Coupons = () => {
                     )}
                   </td>
                   {/* status */}
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-2 text-center">
                     <Switch
                       checked={
                         editingCoupon === coupon.id
@@ -544,7 +544,7 @@ const Coupons = () => {
                   </td>
 
                   {/* max_usage */}
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-2 text-center">
                     {editingCoupon === coupon.id ? (
                       <input
                         type="number"
@@ -565,7 +565,7 @@ const Coupons = () => {
 
                   {/* expire date */}
 
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3 px-2 text-center">
                     {editingCoupon === coupon.id ? (
                       <input
                         type="date"
@@ -597,7 +597,12 @@ const Coupons = () => {
                     )}
                   </td>
 
-                  <td className="py-3 px-6 text-center">
+                  {/* users_count */}
+                  <td className="py-3 px-2 text-center">
+                    {coupon.users_count}
+                  </td>
+
+                  <td className="py-3 px-2 text-center">
                     <div className="flex justify-center gap-4">
                       {editingCoupon === coupon.id ? (
                         <>
@@ -676,7 +681,7 @@ const Coupons = () => {
                   </td>
 
                   {/* status */}
-                  <td className="py-3 px-6 text-center">
+                  <td className="py-3  text-center">
                     <Switch
                       checked={formState.status === 1}
                       onChange={(e) => {
@@ -714,7 +719,7 @@ const Coupons = () => {
                     />
                   </td>
 
-                  <td className="py-3 px-6 text-center shrink-0  min-w-48">
+                  <td className="py-3  text-center shrink-0  min-w-48">
                     <button
                       onClick={handleAddClick}
                       className="text-green-500 hover:text-green-700 focus:outline-none"

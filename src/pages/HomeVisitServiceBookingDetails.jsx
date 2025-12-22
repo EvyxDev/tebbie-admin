@@ -24,17 +24,26 @@ const HomeVisitServiceBookingDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const statesPerPage = 10;
   const [booking_id, setBookingId] = useState("");
-
+  const [dateFrom, setDateFrom] = useState(null); // For date filter from
+  const [dateTo, setDateTo] = useState(null); // For date filter to
   const {
     data: bookings = [],
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["home-visit-service-booking-details", token, hospitalId],
+    queryKey: [
+      "home-visit-service-booking-details",
+      token,
+      hospitalId,
+      dateFrom,
+      dateTo,
+    ],
     queryFn: () =>
       getHomeVisitServiceBookingDetails({
         token,
         hospital_id: hospitalId,
+        dateFrom,
+        dateTo,
       }),
     enabled: !!token && !!hospitalId,
     keepPreviousData: true,
@@ -182,6 +191,16 @@ const HomeVisitServiceBookingDetails = () => {
     setOpen(false);
   };
 
+  const handleDateFromChange = (e) => {
+    console.log(e.target.value);
+
+    setDateFrom(e.target.value);
+  };
+
+  const handleDateToChange = (e) => {
+    setDateTo(e.target.value);
+  };
+
   if (error) return <ErrorMessage message={error.message} />;
 
   return (
@@ -192,16 +211,49 @@ const HomeVisitServiceBookingDetails = () => {
             <FaHome size={30} className="text-[#3CAB8B]" />
             {hospitalName || t("service_booking_details")}
           </h1>
-          {bookingsList.length > 0 && (
-            <button
-              onClick={exportToExcel}
-              className="px-6 h-10 flex items-center justify-center gap-2 bg-gradient-to-br from-[#33A9C7] to-[#3CAB8B] text-white rounded-lg hover:from-[#2A8AA7] hover:to-[#2F8B6B] focus:outline-none focus:ring-2 focus:ring-[#3CAB8B] transition-colors text-sm"
-              aria-label={t("Excel-Export")}
-              type="button"
-            >
-              {t("Excel-Export")}
-            </button>
-          )}
+
+          <div className="md:-mt-6 w-full md:w-[52%] flex gap-4 md:flex-row items-center">
+            <div className="flex-1">
+              <label
+                htmlFor="dateFrom"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {t("date_from")}
+              </label>
+              <input
+                type="date"
+                id="dateFrom"
+                value={dateFrom}
+                onChange={handleDateFromChange}
+                className="w-full p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
+              />
+            </div>
+            <div className="flex-1">
+              <label
+                htmlFor="dateTo"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                {t("date_to")}
+              </label>
+              <input
+                type="date"
+                id="dateTo"
+                value={dateTo}
+                onChange={handleDateToChange}
+                className="w-full p-2 border border-gray-300 rounded-lg py-3 px-4 bg-white h-[50px] focus:outline-none focus:border-primary"
+              />
+            </div>
+            {bookingsList.length > 0 && (
+              <button
+                onClick={exportToExcel}
+                className="px-6 !py-6 h-10 flex items-center mt-[22px] justify-center gap-2 bg-gradient-to-br from-[#33A9C7] to-[#3CAB8B] text-white rounded-lg hover:from-[#2A8AA7] hover:to-[#2F8B6B] focus:outline-none focus:ring-2 focus:ring-[#3CAB8B] transition-colors text-sm"
+                aria-label={t("Excel-Export")}
+                type="button"
+              >
+                {t("Excel-Export")}
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="w-full rounded-lg border border-gray-200 bg-white shadow-sm overflow-x-auto">
