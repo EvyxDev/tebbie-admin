@@ -564,6 +564,7 @@ export const updateHospital = async ({
   // Doctor IDs
   if (doctor_ids.length === 0) {
     formdata.append("doctor_ids[]", JSON.stringify([]));
+    formdata.append("all_doctors_removed", true);
   } else {
     formdata.append("doctor_ids[]", doctor_ids);
   }
@@ -571,6 +572,7 @@ export const updateHospital = async ({
   // Specialization IDs
   if (specialization_id.length === 0) {
     formdata.append("specialization_id[]", JSON.stringify([]));
+    formdata.append("all_specializations_removed", true);
   } else {
     formdata.append("specialization_id[]", specialization_id);
   }
@@ -599,6 +601,7 @@ export const updateHospital = async ({
     throw error;
   }
 };
+
 export const deleteHospital = async ({ id, token }) => {
   try {
     const response = await fetch(`${API_URL}/dashboard/v1/hospitals/${id}`, {
