@@ -75,7 +75,7 @@ export const getDoctors = async ({
     const queryParams = new URLSearchParams();
     if (search) queryParams.append("name", search);
     if (isSpecial) queryParams.append("is_special", isSpecial);
-    if (isVisitor) queryParams.append("is_visitor", isVisitor);
+    // if (isVisitor) queryParams.append("is_visitor", isVisitor);
     if (page) queryParams.append("page", page);
 
     const response = await fetch(
@@ -110,7 +110,7 @@ export const getDoctorSliders = async ({
     if (page) queryParams.append("page", String(page));
     if (search) queryParams.append("name", search);
     if (isSpecial) queryParams.append("is_special", isSpecial);
-    if (isVisitor) queryParams.append("is_visitor", isVisitor);
+    // if (isVisitor) queryParams.append("is_visitor", isVisitor);
 
     const response = await fetch(
       `${API_URL}/dashboard/v1/doctors?${queryParams.toString()}`,

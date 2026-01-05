@@ -73,42 +73,84 @@ const RechargeCards = () => {
       }),
   });
 
+  console.log("cardDatacardData", cardData);
+
   // Client-side date filtering function
+  // const filterByDateRange = useCallback(
+  //   (cards) => {
+  //     if (!dateFrom && !dateTo) return cards;
+
+  //     return cards.filter((card) => {
+  //       if (!card.created_at) return false;
+
+  //       const cardDate = new Date(card.created_at);
+  //       cardDate.setHours(0, 0, 0, 0);
+
+  //       if (dateFrom && dateTo) {
+  //         const fromDate = new Date(dateFrom);
+  //         fromDate.setHours(0, 0, 0, 0);
+  //         fromDate.setDate(fromDate.getDate() - 1);
+
+  //         const toDate = new Date(dateTo);
+  //         toDate.setHours(23, 59, 59, 999);
+  //         toDate.setDate(toDate.getDate() + 1);
+
+  //         return cardDate >= fromDate && cardDate <= toDate;
+  //       } else if (dateFrom) {
+  //         const fromDate = new Date(dateFrom);
+  //         fromDate.setHours(0, 0, 0, 0);
+  //         fromDate.setDate(fromDate.getDate() - 1);
+
+  //         const now = new Date();
+  //         now.setHours(23, 59, 59, 999);
+
+  //         return cardDate >= fromDate && cardDate <= now;
+  //       } else if (dateTo) {
+  //         const toDate = new Date(dateTo);
+  //         toDate.setHours(23, 59, 59, 999);
+  //         toDate.setDate(toDate.getDate() + 1);
+
+  //         return cardDate <= toDate;
+  //       }
+
+  //       return true;
+  //     });
+  //   },
+  //   [dateFrom, dateTo]
+  // );
+
   const filterByDateRange = useCallback(
     (cards) => {
       if (!dateFrom && !dateTo) return cards;
 
       return cards.filter((card) => {
-        if (!card.created_at) return false;
+        if (!card.used_at) return false;
 
-        const cardDate = new Date(card.created_at);
-        cardDate.setHours(0, 0, 0, 0);
+        const usedAt = new Date(card.used_at);
+        usedAt.setHours(0, 0, 0, 0);
 
         if (dateFrom && dateTo) {
-          const fromDate = new Date(dateFrom);
-          fromDate.setHours(0, 0, 0, 0);
-          fromDate.setDate(fromDate.getDate() - 1);
+          const from = new Date(dateFrom);
+          from.setHours(0, 0, 0, 0);
 
-          const toDate = new Date(dateTo);
-          toDate.setHours(23, 59, 59, 999);
-          toDate.setDate(toDate.getDate() + 1);
+          const to = new Date(dateTo);
+          to.setHours(23, 59, 59, 999);
 
-          return cardDate >= fromDate && cardDate <= toDate;
-        } else if (dateFrom) {
-          const fromDate = new Date(dateFrom);
-          fromDate.setHours(0, 0, 0, 0);
-          fromDate.setDate(fromDate.getDate() - 1);
+          return usedAt >= from && usedAt <= to;
+        }
 
-          const now = new Date();
-          now.setHours(23, 59, 59, 999);
+        if (dateFrom) {
+          const from = new Date(dateFrom);
+          from.setHours(0, 0, 0, 0);
 
-          return cardDate >= fromDate && cardDate <= now;
-        } else if (dateTo) {
-          const toDate = new Date(dateTo);
-          toDate.setHours(23, 59, 59, 999);
-          toDate.setDate(toDate.getDate() + 1);
+          return usedAt >= from;
+        }
 
-          return cardDate <= toDate;
+        if (dateTo) {
+          const to = new Date(dateTo);
+          to.setHours(23, 59, 59, 999);
+
+          return usedAt <= to;
         }
 
         return true;
@@ -209,6 +251,7 @@ const RechargeCards = () => {
     startIndex,
     startIndex + itemsPerPage
   );
+
   return (
     <section dir={direction} className="container mx-auto lg:p-6 p-4 w-full">
       <div className="flex justify-end md:flex-row flex-col gap-2 items-center">
