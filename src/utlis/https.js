@@ -103,7 +103,7 @@ export const getDoctorSliders = async ({
   page = 1,
   search = "",
   isSpecial = "",
-  isVisitor = "",
+  // isVisitor = "",
 }) => {
   try {
     const queryParams = new URLSearchParams();
@@ -125,10 +125,11 @@ export const getDoctorSliders = async ({
 
     if (response.ok) {
       const data = await response.json();
-      return data.data;
+      return data?.data;
     }
     throw new Error("Failed to fetch doctors");
   } catch (error) {
+    console.log("errorerror", error.message);
     throw error;
   }
 };

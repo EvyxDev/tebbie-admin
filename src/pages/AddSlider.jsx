@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   addSlider,
   getDoctorSliders,
@@ -15,6 +20,7 @@ import {
   hasPermission,
   getPermissionDisplayName,
 } from "../utlis/permissionUtils";
+import DoctorsSelect from "../components/DashboardComponents/DoctorsSelect";
 
 const realtableType = [
   { id: 1, name: "hospital" },
@@ -28,6 +34,7 @@ const AddSlider = () => {
   const token = localStorage.getItem("authToken");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   const [activeTab, setActiveTab] = useState("external"); // "external" or "type"
   const [imagePreview, setImagePreview] = useState(null);
@@ -59,34 +66,39 @@ const AddSlider = () => {
     },
   });
 
-  const { data: doctorsData } = useQuery({
+  const {
+    data: doctorsData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["doctorsData"],
-    queryFn: async () => {
-      const first = await getDoctorSliders({
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await getDoctorSliders({
         token,
-        page: 1,
-        isVisitor: "yes",
+        page: pageParam,
       });
-      const lastPage = first?.last_page || 1;
-      if (lastPage <= 1) {
-        const onlyVisitors = (first?.data || []).filter(
-          (d) => d?.is_visitor === "yes"
-        );
-        return { data: onlyVisitors };
-      }
-      const pages = await Promise.all(
-        Array.from({ length: lastPage - 1 }, (_, i) =>
-          getDoctorSliders({ token, page: i + 2, isVisitor: "yes" })
-        )
+
+      const onlyVisitors = (res?.data || []).filter(
+        (d) => d?.is_visitor === "yes"
       );
-      const merged = [
-        ...(first?.data || []),
-        ...pages.flatMap((p) => p?.data || []),
-      ];
-      const onlyVisitors = merged.filter((d) => d?.is_visitor === "yes");
-      return { data: onlyVisitors };
+
+      return {
+        data: onlyVisitors,
+        current_page: res.current_page,
+        last_page: res.last_page,
+      };
+    },
+    getNextPageParam: (lastPage) => {
+      if (lastPage.current_page < lastPage.last_page) {
+        return lastPage.current_page + 1;
+      }
+      return undefined;
     },
   });
+
+  const doctors = doctorsData?.pages.flatMap((page) => page.data) || [];
+
   const { data: hospitalData } = useQuery({
     queryKey: ["hospitalData", token],
     queryFn: () => getHospitals({ token }),
@@ -272,26 +284,29 @@ const AddSlider = () => {
                   >
                     اختر الطبيب
                   </label>
-                  <select
-                    name="doctor"
-                    id="doctor"
-                    value={formData.realtable_id}
-                    onChange={(e) =>
+
+                  <DoctorsSelect
+                    selectedDoctor={selectedDoctor}
+                    token={token}
+                    value={
+                      formData.realtable_id
+                        ? {
+                            value: formData.realtable_id,
+                            label: doctors.find(
+                              (d) => d.id === formData.realtable_id
+                            )?.name,
+                          }
+                        : null
+                    }
+                    onChange={(option) => {
+                      setSelectedDoctor(option);
+
                       setFormData((prev) => ({
                         ...prev,
-                        realtable_id: e.target.value,
-                      }))
-                    }
-                    className="border border-gray-300 rounded-lg py-2 px-4 bg-[#F7F8FA] h-[50px] focus:outline-none focus:border-primary w-full"
-                    required
-                  >
-                    <option value="">اختر الطبيب</option>
-                    {doctorsData?.data.map((data) => (
-                      <option key={data.id} value={data.id}>
-                        {data.name}
-                      </option>
-                    ))}
-                  </select>
+                        realtable_id: option?.value || "",
+                      }));
+                    }}
+                  />
                 </div>
               )}
 
