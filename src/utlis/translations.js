@@ -2,6 +2,7 @@
 export const pageTranslations = {
   en: {
     "/": "Dashboard",
+    "/medical-service": "Medical Service",
     "/categories": "Categories",
     "/orders": "Orders",
     "/orders/:OrderId": "Order Details",
@@ -86,6 +87,7 @@ export const pageTranslations = {
   },
   ar: {
     "/": "لوحة التحكم",
+    "/medical-service": "الخدمات الطبية",
     "/categories": "الفئات",
     "/orders": "الطلبات",
     "/orders/:OrderId": "تفاصيل الطلب",

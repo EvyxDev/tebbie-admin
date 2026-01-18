@@ -1,4 +1,7 @@
 /* eslint-disable no-unused-vars */
+
+import { toHHMM } from "./helpers/time-helper";
+
 /* eslint-disable no-useless-catch */
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
@@ -5000,5 +5003,169 @@ export const deleteHospitalMainService = async ({ id, token }) => {
   } catch (error) {
     console.error("Error:", error);
     throw error;
+  }
+};
+
+export const getAllMedicalServices = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service/all`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getServiceById = async (id) => {
+  try {
+    const token = getToken();
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("An error occurred while fetching the medical service");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteMedicalService = async (id) => {
+  try {
+    const token = getToken();
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service/delete/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("An error occurred while deleting the medical service");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.log("error  error error ", error);
+
+    throw new Error(
+      error.message || "An error occurred while deleting the medical service"
+    );
+  }
+};
+
+export const addMedicalService = async (data) => {
+  try {
+    const token = getToken();
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        if (key === "status" || key === "is_featured") {
+          formData.append(key, value ? 1 : 0);
+        } else {
+          formData.append(key, value);
+        }
+      }
+    });
+
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
+  }
+};
+
+export const editMedicalService = async (id, data) => {
+  try {
+    const token = getToken();
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value === null || value === undefined) return;
+
+      if (key === "time_from") {
+        formData.append("time_from", toHHMM(value));
+        return;
+      }
+
+      if (key === "time_to") {
+        formData.append("time_to", toHHMM(value));
+        return;
+      }
+
+      if (key === "status" || key === "is_featured") {
+        formData.append(key, value ? 1 : 0);
+        return;
+      }
+
+      formData.append(key, value);
+    });
+
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service/update/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
   }
 };
