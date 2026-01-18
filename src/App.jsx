@@ -83,6 +83,8 @@ import HospitalServicesDetails from "./pages/HospitalServicesDetails";
 import HomeVisitBookingsDetails from "./pages/HomeVisitBookingsDetails";
 import HomeVisitServiceBookingDetails from "./pages/HomeVisitServiceBookingDetails";
 import CouponDetails from "./pages/CouponDetails";
+import MedicalService from "./pages/MedicalService";
+import MedicalServiceDetails from "./pages/MedicalServiceDetails";
 
 const queryClient = new QueryClient();
 
@@ -193,6 +195,14 @@ const router = createBrowserRouter([
                 <HomeVisitServiceBookingDetails />
               </PermissionWrapper>
             ),
+          },
+          {
+            path: "medical-service",
+            element: <MedicalService />,
+          },
+          {
+            path: "medical-service/:id",
+            element: <MedicalServiceDetails />,
           },
           {
             path: "/users-report/:userid",

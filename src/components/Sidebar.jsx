@@ -26,7 +26,7 @@ import { FaQuestion } from "react-icons/fa";
 import { MdLocationCity } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
-import { RiCoupon2Fill } from "react-icons/ri";
+import { RiCoupon2Fill, RiServiceLine } from "react-icons/ri";
 import { BsCardText } from "react-icons/bs";
 import { FaStethoscope } from "react-icons/fa";
 import LogoutDialog from "./LogoutDialog";
@@ -59,6 +59,11 @@ export const sidebarLinks = [
     path: "/hospital-services",
     label: "hospital services",
     icon: <FaStethoscope size={22} />,
+  },
+  {
+    path: "/medical-service",
+    label: "medical-service",
+    icon: <RiServiceLine size={22} />,
   },
   { path: "/request-Form", label: "requests", icon: <BsCardText size={22} /> },
 ];
