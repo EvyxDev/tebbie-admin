@@ -91,7 +91,7 @@ const UpdateHospital = () => {
     if (hospital) {
       const doctorIds = hospital.doctors.data.map((doctor) => doctor.id);
       const specializationIds = hospital.specializations.data.map(
-        (spec) => spec.id
+        (spec) => spec.id,
       );
 
       setHospitalData({
@@ -139,7 +139,7 @@ const UpdateHospital = () => {
   const handleDoctorChange = (selectedDoctorIds) => {
     // Remove duplicates from selected doctor IDs and sort them
     const uniqueDoctorIds = [...new Set(selectedDoctorIds)].sort(
-      (a, b) => a - b
+      (a, b) => a - b,
     );
 
     setHospitalData((prev) => ({
@@ -210,17 +210,17 @@ const UpdateHospital = () => {
         long: newMarker.lng,
       });
     },
-    [hospitalData]
+    [hospitalData],
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const existingMedia = hospitalData.media.filter(
-      (item) => typeof item === "string"
+      (item) => typeof item === "string",
     );
     const newMediaFiles = hospitalData.media.filter(
-      (item) => item instanceof File
+      (item) => item instanceof File,
     );
 
     const allMedia = [...existingMedia, ...newMediaFiles];
@@ -264,7 +264,7 @@ const UpdateHospital = () => {
     doctors
       ?.filter(
         (doctor, index, self) =>
-          index === self.findIndex((d) => d.id === doctor.id)
+          index === self.findIndex((d) => d.id === doctor.id),
       )
       ?.map((data) => ({
         value: data.id,
@@ -398,7 +398,7 @@ const UpdateHospital = () => {
                   required
                   onChange={handleChange}
                   value={hospitalData.phone}
-                  type="number"
+                  type="text"
                   className="border border-gray-300 rounded-lg py-2 px-4 bg-[#F7F8FA] h-[50px] focus:outline-none focus:border-primary w-full "
                 />
               </div>

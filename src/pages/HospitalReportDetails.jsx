@@ -50,7 +50,7 @@ const HospitalReportDetails = () => {
   const indexOfFirstState = indexOfLastState - statesPerPage;
   const currentStates = hospitalData.bookings.slice(
     indexOfFirstState,
-    indexOfLastState
+    indexOfLastState,
   );
   const totalPages =
     hospitalData.bookings.length > 0
@@ -111,6 +111,7 @@ const HospitalReportDetails = () => {
   const exportToExcel = () => {
     const worksheet = utils.json_to_sheet(
       hospitalData.bookings.map((data) => ({
+        [t("user_nameReport")]: data.user_name || t("Na"),
         [t("patientName")]: data.patient_name || t("Na"),
         [t("phone")]: data.patient_phone || t("Na"),
         [t("doctorName")]: data.doctor_name || t("Na"),
@@ -124,13 +125,13 @@ const HospitalReportDetails = () => {
         [t("discount_amount")]: data.discount_amount || t("Na"),
         [t("final_price")]: data.final_price || t("Na"),
         [t("booking_date")]: data.booking_date || t("Na"),
-      }))
+      })),
     );
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, "Hospital Report");
     writeFile(
       workbook,
-      `${hospitalData.hospital_name}_Report_${activeTab}.xlsx`
+      `${hospitalData.hospital_name}_Report_${activeTab}.xlsx`,
     );
   };
 
@@ -225,6 +226,7 @@ const HospitalReportDetails = () => {
             <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
               <tr>
                 {[
+                  "user_nameReport",
                   "patientName",
                   "phone",
                   "doctorName",
@@ -266,6 +268,9 @@ const HospitalReportDetails = () => {
                     }`}
                   >
                     <td className="py-3 px-3 text-center whitespace-nowrap">
+                      {data.user_name || t("Na")}
+                    </td>
+                    <td className="py-3 px-3 text-center whitespace-nowrap">
                       {data.patient_name || t("Na")}
                     </td>
                     <td className="py-3 px-3 text-center whitespace-nowrap">
@@ -281,8 +286,8 @@ const HospitalReportDetails = () => {
                           data.booking_status === "cancelled"
                             ? "bg-red-400 text-white rounded-full"
                             : data.booking_status === "finished"
-                            ? "bg-green-400 text-white rounded-full"
-                            : "bg-blue-400 text-white rounded-full"
+                              ? "bg-green-400 text-white rounded-full"
+                              : "bg-blue-400 text-white rounded-full"
                         }`}
                       >
                         {t(data.booking_status)}
@@ -294,8 +299,8 @@ const HospitalReportDetails = () => {
                           data.payment_status === "unpaid"
                             ? "bg-red-400 text-white rounded-full"
                             : data.payment_status === "paid"
-                            ? "bg-green-400 text-white rounded-full"
-                            : "bg-gray-400 text-white rounded-full"
+                              ? "bg-green-400 text-white rounded-full"
+                              : "bg-gray-400 text-white rounded-full"
                         }`}
                       >
                         {t(data.payment_status) || t("Na")}

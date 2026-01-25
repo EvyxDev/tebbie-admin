@@ -75,7 +75,7 @@ const HospitalsReport = ({ hospitalsData }) => {
         value: hospital.id,
         label: hospital.name,
       })),
-    [hospitalsData]
+    [hospitalsData],
   );
 
   const filteredData = useMemo(() => {
@@ -98,9 +98,9 @@ const HospitalsReport = ({ hospitalsData }) => {
     () =>
       filteredData.slice(
         (currentPage - 1) * statesPerPage,
-        currentPage * statesPerPage
+        currentPage * statesPerPage,
       ),
-    [filteredData, currentPage]
+    [filteredData, currentPage],
   );
 
   const handlePageChange = useCallback((newPage) => {
@@ -131,13 +131,13 @@ const HospitalsReport = ({ hospitalsData }) => {
         [t("hospital")]: data?.hospital_name || t("Na"),
         [t("total_bookings")]: data?.total_count ?? t("Na"),
         [t("avg_rating")]: data?.avg_rating ?? undefined,
-      }))
+      })),
     );
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, "Hospital Report");
     writeFile(
       workbook,
-      `Hospital_Report_${new Date().toISOString().split("T")[0]}.xlsx`
+      `Hospital_Report_${new Date().toISOString().split("T")[0]}.xlsx`,
     );
   };
 
