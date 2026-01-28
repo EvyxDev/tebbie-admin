@@ -85,6 +85,7 @@ import HomeVisitServiceBookingDetails from "./pages/HomeVisitServiceBookingDetai
 import CouponDetails from "./pages/CouponDetails";
 import MedicalService from "./pages/MedicalService";
 import MedicalServiceDetails from "./pages/MedicalServiceDetails";
+import AllAnalysisPageServices from "./pages/AllAnalysisServices";
 
 const queryClient = new QueryClient();
 
@@ -195,6 +196,10 @@ const router = createBrowserRouter([
                 <HomeVisitServiceBookingDetails />
               </PermissionWrapper>
             ),
+          },
+          {
+            path: "analysis-radiology-services",
+            element: <AllAnalysisPageServices />,
           },
           {
             path: "medical-service",

@@ -60,11 +60,16 @@ export const sidebarLinks = [
     label: "hospital services",
     icon: <FaStethoscope size={22} />,
   },
-  // {
-  //   path: "/medical-service",
-  //   label: "medical-service",
-  //   icon: <RiServiceLine size={22} />,
-  // },
+  {
+    path: "/analysis-radiology-services",
+    label: "analysis-radiology-services",
+    icon: <RiServiceLine size={22} />,
+  },
+  {
+    path: "/medical-service",
+    label: "medical-service",
+    icon: <RiServiceLine size={22} />,
+  },
   { path: "/request-Form", label: "requests", icon: <BsCardText size={22} /> },
 ];
 export const therestofSidebarLinks = [

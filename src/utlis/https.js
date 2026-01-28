@@ -60,7 +60,7 @@ export const updateUserData = async ({
 
   if (!response.ok) {
     throw new Error(
-      result.msg || "An error occurred while updating the user data"
+      result.msg || "An error occurred while updating the user data",
     );
   }
 
@@ -89,7 +89,7 @@ export const getDoctors = async ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -123,7 +123,7 @@ export const getDoctorSliders = async ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -166,7 +166,7 @@ export const getSpecificCoupon = async ({ token, id }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -191,7 +191,7 @@ export const deleteDoctor = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the doctor"
+        result.msg || "An error occurred while deleting the doctor",
       );
     }
 
@@ -253,7 +253,7 @@ export const updateDoctor = async ({
         throw new Error(result.errors.join(", "));
       } else {
         throw new Error(
-          result.message || "An error occurred while updating the doctor"
+          result.message || "An error occurred while updating the doctor",
         );
       }
     }
@@ -312,7 +312,7 @@ export const addDoctor = async ({
         throw new Error(result.errors.join(", "));
       } else {
         throw new Error(
-          result.message || "An error occurred while adding the doctor"
+          result.message || "An error occurred while adding the doctor",
         );
       }
     }
@@ -332,14 +332,14 @@ export const restoreDoctor = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the doctors"
+        result.msg || "An error occurred while restoring the doctors",
       );
     }
 
@@ -485,7 +485,7 @@ export const getHospitals = async ({ token }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -619,7 +619,7 @@ export const deleteHospital = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the Hospital"
+        result.msg || "An error occurred while deleting the Hospital",
       );
     }
 
@@ -638,14 +638,14 @@ export const restoreHospital = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the Hospital"
+        result.msg || "An error occurred while restoring the Hospital",
       );
     }
 
@@ -702,7 +702,7 @@ export const getSpecificSpecializations = async ({ token, id }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -739,7 +739,7 @@ export const newSpecializations = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while adding a new Specializations"
+        result.msg || "An error occurred while adding a new Specializations",
       );
     }
 
@@ -776,14 +776,14 @@ export const updateSpecializations = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating a new Specializations "
+        result.msg || "An error occurred while updating a new Specializations ",
       );
     }
 
@@ -802,14 +802,14 @@ export const deleteSpecializations = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the specializations"
+        result.msg || "An error occurred while deleting the specializations",
       );
     }
 
@@ -828,14 +828,14 @@ export const restorespecializations = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the specializations"
+        result.msg || "An error occurred while restoring the specializations",
       );
     }
 
@@ -855,7 +855,7 @@ export const getTrashedSpecializations = async ({ token }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -900,7 +900,7 @@ export const getStatByCities = async ({ token, id }) => {
         body: JSON.stringify({
           state_ids: [id],
         }),
-      }
+      },
     );
 
     if (response.ok) {
@@ -942,7 +942,7 @@ export const deleteState = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the state"
+        result.msg || "An error occurred while deleting the state",
       );
     }
 
@@ -971,7 +971,7 @@ export const updateState = async ({ id, name, _method = "PATCH", token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the state"
+        result.msg || "An error occurred while updating the state",
       );
     }
 
@@ -999,7 +999,7 @@ export const addState = async ({ name, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the state"
+        result.msg || "An error occurred while updating the state",
       );
     }
 
@@ -1018,14 +1018,14 @@ export const restoreState = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the specializations"
+        result.msg || "An error occurred while restoring the specializations",
       );
     }
 
@@ -1104,7 +1104,7 @@ export const deleteCity = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the city"
+        result.msg || "An error occurred while deleting the city",
       );
     }
 
@@ -1140,7 +1140,7 @@ export const updateCity = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the city"
+        result.msg || "An error occurred while updating the city",
       );
     }
 
@@ -1169,7 +1169,7 @@ export const addCity = async ({ name, token, state_id }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the city"
+        result.msg || "An error occurred while updating the city",
       );
     }
 
@@ -1188,14 +1188,14 @@ export const restoreCity = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the cities"
+        result.msg || "An error occurred while restoring the cities",
       );
     }
 
@@ -1254,7 +1254,7 @@ export const getRegion = async ({ token, id }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -1281,7 +1281,7 @@ export const addRegion = async ({ name, city_id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while creating the region"
+        result.msg || "An error occurred while creating the region",
       );
     }
 
@@ -1303,14 +1303,14 @@ export const updateRegion = async ({ id, name, city_id, token }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ name, city_id }),
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the region"
+        result.msg || "An error occurred while updating the region",
       );
     }
 
@@ -1330,14 +1330,14 @@ export const deleteRegion = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the region"
+        result.msg || "An error occurred while deleting the region",
       );
     }
 
@@ -1439,7 +1439,7 @@ export const updateSliders = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the doctor"
+        result.msg || "An error occurred while updating the doctor",
       );
     }
 
@@ -1459,7 +1459,7 @@ export const getDoctorCommissions = async ({ token }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -1492,7 +1492,7 @@ export const addDoctorCommission = async ({
           hospital_id,
           tabi_commission_percentage,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -1526,7 +1526,7 @@ export const updateDoctorCommission = async ({
           hospital_id,
           tabi_commission_percentage,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -1552,7 +1552,7 @@ export const getHomeVisitCommissions = async ({ token }) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -1585,7 +1585,7 @@ export const addHomeVisitCommission = async ({
           hospital_id,
           tabi_commission_percentage,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -1619,7 +1619,7 @@ export const updateHomeVisitCommission = async ({
           hospital_id,
           tabi_commission_percentage,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -1739,7 +1739,7 @@ export const addSlider = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while adding the slider"
+        result.msg || "An error occurred while adding the slider",
       );
     }
 
@@ -1799,7 +1799,7 @@ export const getQuestion = async ({ token, id }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -1819,7 +1819,7 @@ export const deleteQuestion = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     if (response.ok) {
       const data = await response.json();
@@ -1850,14 +1850,14 @@ export const updateQuestions = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the doctor"
+        result.msg || "An error occurred while updating the doctor",
       );
     }
 
@@ -1885,7 +1885,7 @@ export const addQuestion = async ({ question, answer, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while adding the question"
+        result.msg || "An error occurred while adding the question",
       );
     }
 
@@ -1959,7 +1959,7 @@ export const addRechargeCards = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.message || "An error occurred while adding the card"
+        result.message || "An error occurred while adding the card",
       );
     }
 
@@ -2014,7 +2014,7 @@ export const addSettings = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -2039,7 +2039,7 @@ export const getSetting = async ({ token, id }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -2066,14 +2066,14 @@ export const updateSetting = async ({ id, token, ...data }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating settings"
+        result.msg || "An error occurred while updating settings",
       );
     }
     return result.data;
@@ -2187,7 +2187,7 @@ export const newCoupon = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.message || "An error occurred while adding the Coupon"
+        result.message || "An error occurred while adding the Coupon",
       );
     }
 
@@ -2324,7 +2324,7 @@ export const newLab = async ({
     // Handle errors
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while adding a new Hospital"
+        result.msg || "An error occurred while adding a new Hospital",
       );
     }
 
@@ -2390,7 +2390,7 @@ export const updateLab = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating  the Hospital"
+        result.msg || "An error occurred while updating  the Hospital",
       );
     }
 
@@ -2413,7 +2413,7 @@ export const deleteLab = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the Hospital"
+        result.msg || "An error occurred while deleting the Hospital",
       );
     }
 
@@ -2436,7 +2436,7 @@ export const restoreLab = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the Hospital"
+        result.msg || "An error occurred while restoring the Hospital",
       );
     }
 
@@ -2510,7 +2510,7 @@ export const newLabType = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while adding a new Lab type"
+        result.msg || "An error occurred while adding a new Lab type",
       );
     }
 
@@ -2548,7 +2548,7 @@ export const updateLabType = async ({
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while updating the Lab type"
+        result.msg || "An error occurred while updating the Lab type",
       );
     }
 
@@ -2571,7 +2571,7 @@ export const deleteLabType = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the Lab type"
+        result.msg || "An error occurred while deleting the Lab type",
       );
     }
 
@@ -2590,14 +2590,14 @@ export const restoreLabType = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the Lab type"
+        result.msg || "An error occurred while restoring the Lab type",
       );
     }
 
@@ -2754,7 +2754,7 @@ export const deleteEmployee = async ({ id, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the Employee"
+        result.msg || "An error occurred while deleting the Employee",
       );
     }
 
@@ -2773,14 +2773,14 @@ export const restoreEmployee = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while restoring the Employee"
+        result.msg || "An error occurred while restoring the Employee",
       );
     }
 
@@ -2823,7 +2823,7 @@ export const getHomeVisitReportById = async ({ token, serviceId }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch home visit report: ${response.status} - ${errorText}`
+        `Failed to fetch home visit report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -2846,7 +2846,7 @@ export const getUserReportById = async ({ token, userid }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch home visit report: ${response.status} - ${errorText}`
+        `Failed to fetch home visit report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -2878,7 +2878,7 @@ export const updateService = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -2902,14 +2902,14 @@ export const deleteService = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the service"
+        result.msg || "An error occurred while deleting the service",
       );
     }
 
@@ -2929,7 +2929,7 @@ export const getService = async ({ token, id }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -3024,7 +3024,7 @@ export const addHospitalService = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -3070,7 +3070,7 @@ export const updateHospitalService = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -3095,14 +3095,14 @@ export const deleteHospitalService = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while deleting the hospital service"
+        result.msg || "An error occurred while deleting the hospital service",
       );
     }
 
@@ -3140,12 +3140,12 @@ export const checkToken = async ({ token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     const result = await response.json();
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while checking the token"
+        result.msg || "An error occurred while checking the token",
       );
     }
 
@@ -3170,7 +3170,7 @@ export const getRefundsDetails = async ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -3191,7 +3191,7 @@ export const getRefunds = async ({ token, hospitalname }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -3217,7 +3217,7 @@ export const postRefund = async ({ appointments, token }) => {
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while processing the refund"
+        result.msg || "An error occurred while processing the refund",
       );
     }
 
@@ -3237,14 +3237,14 @@ export const cancelBooking = async ({ bookingId, token }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while processing the refund"
+        result.msg || "An error occurred while processing the refund",
       );
     }
 
@@ -3323,7 +3323,7 @@ export const getAllHomeVisit = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -3344,7 +3344,7 @@ export const getStateAndCitiesReport = async ({ token }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -3390,7 +3390,7 @@ export const getReviewsReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3442,7 +3442,7 @@ export const getCancelledReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3497,7 +3497,7 @@ export const getDocotrReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3541,7 +3541,7 @@ export const getHospitalsReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3562,7 +3562,7 @@ export const getGeneralStatistics = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -3625,7 +3625,7 @@ export const getUsersReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3677,7 +3677,7 @@ export const getHomeVisitReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3706,7 +3706,7 @@ export const getHospitalsServiceBookingsSummary = async ({ token }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch hospitals bookings summary: ${response.status} - ${errorText}`
+        `Failed to fetch hospitals bookings summary: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3714,7 +3714,7 @@ export const getHospitalsServiceBookingsSummary = async ({ token }) => {
     return data.data || [];
   } catch (error) {
     throw new Error(
-      `Error in getHospitalsServiceBookingsSummary: ${error.message}`
+      `Error in getHospitalsServiceBookingsSummary: ${error.message}`,
     );
   }
 };
@@ -3749,7 +3749,7 @@ export const getHospitalServiceReportById = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch hospital services report: ${response.status} - ${errorText}`
+        `Failed to fetch hospital services report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3771,14 +3771,14 @@ export const cancelHospitalServiceBooking = async ({ bookingId, token }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
 
     if (!response.ok) {
       throw new Error(
-        result.msg || "An error occurred while canceling the booking"
+        result.msg || "An error occurred while canceling the booking",
       );
     }
 
@@ -3808,7 +3808,7 @@ export const getHomeVisitBookingsSummary = async ({ token }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch home visit bookings summary: ${response.status} - ${errorText}`
+        `Failed to fetch home visit bookings summary: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3838,7 +3838,7 @@ export const getHomeVisitBookingsByService = async ({ token, hospital_id }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch home visit bookings by service: ${response.status} - ${errorText}`
+        `Failed to fetch home visit bookings by service: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3883,7 +3883,7 @@ export const getHomeVisitServiceBookingDetails = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch home visit service booking details: ${response.status} - ${errorText}`
+        `Failed to fetch home visit service booking details: ${response.status} - ${errorText}`,
       );
     }
 
@@ -3891,7 +3891,7 @@ export const getHomeVisitServiceBookingDetails = async ({
     return result.data || [];
   } catch (error) {
     throw new Error(
-      `Error in getHomeVisitServiceBookingDetails: ${error.message}`
+      `Error in getHomeVisitServiceBookingDetails: ${error.message}`,
     );
   }
 };
@@ -3909,7 +3909,7 @@ export const cancelHomeVisitServiceBooking = async ({ token, booking_id }) => {
         // "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -3935,7 +3935,7 @@ export const decrementUserWallet = async ({ token, userId, newBalance }) => {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
-      }
+      },
     );
 
     const result = await response.json();
@@ -3970,7 +3970,7 @@ export const getPaymentReport = async ({ token }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch payment report: ${response.status} - ${errorText}`
+        `Failed to fetch payment report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4041,7 +4041,7 @@ export const updateCustomerService = async ({
         throw new Error(result.errors.join(", "));
       } else {
         throw new Error(
-          result.message || "An error occurred while adding the doctor"
+          result.message || "An error occurred while adding the doctor",
         );
       }
     }
@@ -4085,7 +4085,7 @@ export const addCustomerService = async ({
         throw new Error(result.errors.join(", "));
       } else {
         throw new Error(
-          result.message || "An error occurred while adding the doctor"
+          result.message || "An error occurred while adding the doctor",
         );
       }
     }
@@ -4149,7 +4149,7 @@ export const postMessage = async ({ user_id, message, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -4234,7 +4234,7 @@ export const getHospitalsByspecialization = async ({ token, id = 1 }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -4358,7 +4358,7 @@ export const updateRolePermissions = async ({ token, roleId, permissions }) => {
         body: JSON.stringify({
           permissions: permissions,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -4403,7 +4403,7 @@ export const fetchAdminUsersList = async ({ token, search, page }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4428,7 +4428,7 @@ export const getAdmins = async ({ token }) => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch admins: ${response.status} - ${errorText}`
+        `Failed to fetch admins: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4476,7 +4476,7 @@ export const createAdmin = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to create admin: ${response.status} - ${errorText}`
+        `Failed to create admin: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4524,13 +4524,13 @@ export const updateAdmin = async ({
           Authorization: `Bearer ${token}`,
         },
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to update admin: ${response.status} - ${errorText}`
+        `Failed to update admin: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4602,7 +4602,7 @@ export const getHospitalReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch reviews report: ${response.status} - ${errorText}`
+        `Failed to fetch reviews report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4653,7 +4653,7 @@ export const updatetermsAndConditions = async ({ token, term_condition }) => {
         throw new Error(result.errors.join(", "));
       } else {
         throw new Error(
-          result.message || "An error occurred while adding the doctor"
+          result.message || "An error occurred while adding the doctor",
         );
       }
     }
@@ -4675,7 +4675,7 @@ export const updateWhatsapp = async ({ whatsapp, token }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ whatsapp }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -4699,7 +4699,7 @@ export const getwhatsapp = async ({ token }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -4745,7 +4745,7 @@ export const getUserWalletReport = async ({
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Failed to fetch user wallet report: ${response.status} - ${errorText}`
+        `Failed to fetch user wallet report: ${response.status} - ${errorText}`,
       );
     }
 
@@ -4814,7 +4814,7 @@ export const addHomeVisitService = async ({
           hospital_price,
           tabi_price,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -4858,7 +4858,7 @@ export const updateHomeVisitService = async ({
           hospital_price,
           tabi_price,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -4884,7 +4884,7 @@ export const getHospitalMainServices = async ({ token }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -4925,7 +4925,7 @@ export const addHospitalMainService = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -4962,7 +4962,7 @@ export const updateHospitalMainService = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -4987,7 +4987,7 @@ export const deleteHospitalMainService = async ({ id, token }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     const result = await response.json();
@@ -4995,7 +4995,7 @@ export const deleteHospitalMainService = async ({ id, token }) => {
     if (!response.ok) {
       throw new Error(
         result.msg ||
-          "An error occurred while deleting the hospital main service"
+          "An error occurred while deleting the hospital main service",
       );
     }
 
@@ -5017,8 +5017,28 @@ export const getAllMedicalServices = async () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.data;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllAnalysisRadiologyServices = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_URL}/dashboard/v1/analysis`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response.ok) {
       const data = await response.json();
@@ -5040,7 +5060,31 @@ export const getServiceById = async (id) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("An error occurred while fetching the medical service");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllItemsServiceById = async (id) => {
+  try {
+    const token = getToken();
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service-item?medical_service_id=${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
 
     if (!response.ok) {
@@ -5064,7 +5108,7 @@ export const deleteMedicalService = async (id) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -5076,7 +5120,7 @@ export const deleteMedicalService = async (id) => {
     console.log("error  error error ", error);
 
     throw new Error(
-      error.message || "An error occurred while deleting the medical service"
+      error.message || "An error occurred while deleting the medical service",
     );
   }
 };
@@ -5104,7 +5148,7 @@ export const addMedicalService = async (data) => {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
@@ -5154,7 +5198,160 @@ export const editMedicalService = async (id, data) => {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
+      },
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
+  }
+};
+
+export const addAnalysisService = async (data) => {
+  try {
+    const token = getToken();
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value);
       }
+    });
+
+    const response = await fetch(`${API_URL}/dashboard/v1/analysis`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
+  }
+};
+
+export const editAnalysisService = async (id, data) => {
+  try {
+    const token = getToken();
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value === null || value === undefined) return;
+      formData.append(key, value);
+    });
+
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/analysis/update/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      },
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
+  }
+};
+
+export const deleteAnalysisItem = async (id) => {
+  try {
+    const token = getToken();
+    const formData = new FormData();
+
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service-item/delete/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      },
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
+  }
+};
+
+export const addItemAnalysis = async (data) => {
+  try {
+    const token = getToken();
+
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service-item`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    );
+
+    if (!response.ok) {
+      const errData = await response.json();
+      throw new Error(errData.message || "Error while adding medical service");
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.log("Add medical service error:", error);
+    throw new Error(error.message || "Error while adding medical service");
+  }
+};
+
+export const updateAnalysisItem = async (id, data) => {
+  try {
+    const token = getToken();
+
+    const response = await fetch(
+      `${API_URL}/dashboard/v1/admin/medical-service-item/update/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
     );
 
     if (!response.ok) {

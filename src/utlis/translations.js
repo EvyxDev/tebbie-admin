@@ -3,6 +3,7 @@ export const pageTranslations = {
   en: {
     "/": "Dashboard",
     "/medical-service": "Medical Service",
+    "/analysis-radiology-services": "Analysis & Radiology",
     "/categories": "Categories",
     "/orders": "Orders",
     "/orders/:OrderId": "Order Details",
@@ -88,6 +89,7 @@ export const pageTranslations = {
   ar: {
     "/": "لوحة التحكم",
     "/medical-service": "الخدمات الطبية",
+    "/analysis-radiology-services": "تحليل وأشاعة",
     "/categories": "الفئات",
     "/orders": "الطلبات",
     "/orders/:OrderId": "تفاصيل الطلب",
